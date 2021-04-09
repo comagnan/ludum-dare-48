@@ -1,0 +1,35 @@
+﻿<root>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    </resheader>
+    <data name="LittleLadyConclusion1" xml:space="preserve">
+        <value>La jeune demoiselle est revenue.</value>
+    </data>
+    <data name="LittleLadyConclusion2" xml:space="preserve">
+        <value>Encore une fois, elle nous a fixé de son regard perçant.</value>
+    </data>
+    <data name="LittleLadyConclusion3" xml:space="preserve">
+        <value>Lorsque je lui ai donné ma création, par contre, quelque chose a changé.</value>
+    </data>
+    <data name="LittleLadyConclusion4" xml:space="preserve">
+        <value>Elle était toujours silencieuse, sans sourire.</value>
+    </data>
+    <data name="LittleLadyConclusion5" xml:space="preserve">
+        <value>Mais elle a glissé une larme en la serrant dans ses bras.</value>
+    </data>
+    <data name="TestLongString" xml:space="preserve">
+        <value>Tu sais, àéĩçòũ, je me suis rendu compte de quelque chose. Ce que nous vivons, c'est bel et bien les miracles et magie: version arcade plus ultra.</value>
+    </data>
+    <data name="TestShortString" xml:space="preserve">
+        <value>Euh... Si tu le dis...</value>
+    </data>
+</root>

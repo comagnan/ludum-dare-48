@@ -1,0 +1,11 @@
+.idea/
+
+LD48/bin/
+
+LD48/obj/
+
+LD48/Content/obj/
+
+LD48/Content/bin/
+
+.tool-versions
