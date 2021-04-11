@@ -1,8 +1,6 @@
 # LUDUM DARE 48 MYSTERY PROJECT
 This repository will contain our Ludum Dare 48 project, built using .net.
 
-This is an example change.
-
 ## Requirements
 - [.net 5 SDK](https://dotnet.microsoft.com/download/dotnet/5.0)
 - An IDE with support for .net, such as [JetBrains Rider] (https://www.jetbrains.com/rider/).
