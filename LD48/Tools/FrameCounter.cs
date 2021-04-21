@@ -7,9 +7,8 @@ namespace LD48.Tools
 {
     public class FrameCounter
     {
-        private readonly Queue<float> m_SampleBuffer = new Queue<float>();
-
         public const int MAXIMUM_SAMPLES = 5;
+        private readonly Queue<float> m_SampleBuffer = new();
         public long TotalFrames { get; private set; }
         public float TotalSeconds { get; private set; }
         public float AverageFramesPerSecond { get; private set; }
@@ -17,15 +16,18 @@ namespace LD48.Tools
 
         public bool Update(GameTime p_GameTime)
         {
-            float deltaTime = (float) p_GameTime.ElapsedGameTime.TotalSeconds;
+            var deltaTime = (float) p_GameTime.ElapsedGameTime.TotalSeconds;
             CurrentFramesPerSecond = 1 / deltaTime;
 
             m_SampleBuffer.Enqueue(CurrentFramesPerSecond);
 
-            if (m_SampleBuffer.Count > MAXIMUM_SAMPLES) {
+            if (m_SampleBuffer.Count > MAXIMUM_SAMPLES)
+            {
                 m_SampleBuffer.Dequeue();
                 AverageFramesPerSecond = (float) Math.Ceiling(m_SampleBuffer.Average(i => i));
-            } else {
+            }
+            else
+            {
                 AverageFramesPerSecond = CurrentFramesPerSecond;
             }
 

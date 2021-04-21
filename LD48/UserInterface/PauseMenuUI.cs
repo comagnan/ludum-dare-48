@@ -48,7 +48,7 @@ namespace LD48.UserInterface
                 if (m_Offset > 0) {
                     m_Offset = Math.Max(0, m_Offset - (int) (p_Time.ElapsedGameTime.TotalMilliseconds * MOVEMENT_VELOCITY));
                 } else {
-                    if ((p_InputController.IsButtonPress(InputConfiguration.Roll) && m_CurrentPointer == 0)
+                    if ((p_InputController.IsButtonPress(InputConfiguration.Confirm) && m_CurrentPointer == 0)
                         || p_InputController.IsButtonPress(InputConfiguration.Pause)) {
                         Paused = false;
                     } else if (p_InputController.IsButtonPress(InputConfiguration.Down)) {

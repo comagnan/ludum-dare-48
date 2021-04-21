@@ -41,22 +41,16 @@ namespace LD48.Framework.Input
                 KeyInputs = new List<Keys> { Keys.Right }
             };
 
-        public static CompositeInput Roll =>
+        public static CompositeInput Confirm =>
             new CompositeInput {
                 ButtonInputs = new List<Buttons> { Buttons.A },
                 KeyInputs = new List<Keys> { Keys.X }
             };
 
-        public static CompositeInput Interact =>
+        public static CompositeInput Return =>
             new() {
                 ButtonInputs = new List<Buttons> { Buttons.B },
-                KeyInputs = new List<Keys> { Keys.Z }
-            };
-
-        public static CompositeInput Debug =>
-            new CompositeInput {
-                ButtonInputs = new List<Buttons>(),
-                KeyInputs = new List<Keys> { Keys.LeftControl }
+                KeyInputs = new List<Keys> { Keys.C }
             };
 
         public static CompositeInput Exit =>
@@ -68,7 +62,10 @@ namespace LD48.Framework.Input
         public static CompositeInput Pause =>
             new CompositeInput {
                 ButtonInputs = new List<Buttons> { Buttons.Start },
-                KeyInputs = new List<Keys> { Keys.P }
+                KeyInputs = new List<Keys> {
+                    Keys.P,
+                    Keys.Enter
+                }
             };
     }
 }

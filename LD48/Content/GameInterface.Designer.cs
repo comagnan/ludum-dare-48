@@ -97,6 +97,24 @@ namespace LD48.Content {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Credits.
+        /// </summary>
+        internal static string Credits {
+            get {
+                return ResourceManager.GetString("Credits", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to LUDUM DARE 48.
+        /// </summary>
+        internal static string GameTitle {
+            get {
+                return ResourceManager.GetString("GameTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Health.
         /// </summary>
         internal static string Health {
@@ -120,6 +138,15 @@ namespace LD48.Content {
         internal static string Home {
             get {
                 return ResourceManager.GetString("Home", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to How to play.
+        /// </summary>
+        internal static string HowToPlay {
+            get {
+                return ResourceManager.GetString("HowToPlay", resourceCulture);
             }
         }
         
@@ -156,6 +183,24 @@ namespace LD48.Content {
         internal static string Paused {
             get {
                 return ResourceManager.GetString("Paused", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Press X.
+        /// </summary>
+        internal static string PressAButton {
+            get {
+                return ResourceManager.GetString("PressAButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Quit.
+        /// </summary>
+        internal static string Quit {
+            get {
+                return ResourceManager.GetString("Quit", resourceCulture);
             }
         }
         
@@ -201,6 +246,15 @@ namespace LD48.Content {
         internal static string Sign {
             get {
                 return ResourceManager.GetString("Sign", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start.
+        /// </summary>
+        internal static string Start {
+            get {
+                return ResourceManager.GetString("Start", resourceCulture);
             }
         }
     }

@@ -39,7 +39,7 @@ namespace LD48.Framework.Levels
 
                 foreach (InteractiveActor actor in InteractiveActors) {
                     actor.Update(p_GameTime, Player);
-                    if (p_InputController.IsButtonPress(InputConfiguration.Interact)) {
+                    if (p_InputController.IsButtonPress(InputConfiguration.Return)) {
                         actor.Interact(DialogueBox);
                     }
                 }

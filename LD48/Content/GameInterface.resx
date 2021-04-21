@@ -66,4 +66,22 @@
     <data name="Save/Quit" xml:space="preserve">
         <value>Save/Quit</value>
     </data>
+    <data name="PressAButton" xml:space="preserve">
+        <value>Press X</value>
+    </data>
+    <data name="GameTitle" xml:space="preserve">
+        <value>LUDUM DARE 48</value>
+    </data>
+    <data name="Quit" xml:space="preserve">
+        <value>Quit</value>
+    </data>
+    <data name="Start" xml:space="preserve">
+        <value>Start</value>
+    </data>
+    <data name="HowToPlay" xml:space="preserve">
+        <value>How to play</value>
+    </data>
+    <data name="Credits" xml:space="preserve">
+        <value>Credits</value>
+    </data>
 </root>

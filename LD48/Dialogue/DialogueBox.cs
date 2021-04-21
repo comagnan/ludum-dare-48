@@ -83,7 +83,7 @@ namespace LD48.Dialogue
                     // TODO: Deceleration over constant speed would be a nice plus.
                     m_Offset -= p_GameTime.ElapsedGameTime.Milliseconds * MOVEMENT_SPEED;
                 } else if (!IsShowingFullText()) {
-                    if (p_InputController.IsButtonPress(InputConfiguration.Roll) || p_InputController.IsButtonPress(InputConfiguration.Interact)) {
+                    if (p_InputController.IsButtonPress(InputConfiguration.Confirm) || p_InputController.IsButtonPress(InputConfiguration.Return)) {
                         int maxColumns = Math.Min(m_CurrentText.Count, MAXIMUM_LINES);
                         m_CurrentPointer[0] = maxColumns - 1;
                         m_CurrentPointer[1] = m_CurrentText[m_CurrentPointer[0]].Length - 1;
@@ -110,7 +110,7 @@ namespace LD48.Dialogue
                     }
                 } else {
                     // Go over every line in string. Proceed on button press.
-                    if (p_InputController.IsButtonPress(InputConfiguration.Roll) || p_InputController.IsButtonPress(InputConfiguration.Interact)) {
+                    if (p_InputController.IsButtonPress(InputConfiguration.Confirm) || p_InputController.IsButtonPress(InputConfiguration.Return)) {
                         PopDialogue();
                     }
                 }

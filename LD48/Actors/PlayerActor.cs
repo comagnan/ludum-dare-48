@@ -78,7 +78,7 @@ namespace LD48.Actors
                     m_MovementTimeSpan = TimeSpan.Zero;
                     m_Rolling = false;
                 }
-            } else if (m_IsDodgeButtonEnabled && p_InputController.IsButtonDown(InputConfiguration.Roll)) {
+            } else if (m_IsDodgeButtonEnabled && p_InputController.IsButtonDown(InputConfiguration.Confirm)) {
                 if (CurrentVelocity.X != 0 || CurrentVelocity.Y != 0) {
                     m_Rolling = true;
                     m_MovementTimeSpan = TimeSpan.Zero;
@@ -109,7 +109,7 @@ namespace LD48.Actors
                 }
             }
 
-            m_IsDodgeButtonEnabled = !p_InputController.IsButtonDown(InputConfiguration.Roll);
+            m_IsDodgeButtonEnabled = !p_InputController.IsButtonDown(InputConfiguration.Confirm);
 
             if (IsInvincible) {
                 m_InvincibilityTimeSpan = m_InvincibilityTimeSpan.Subtract(p_GameTime.ElapsedGameTime);

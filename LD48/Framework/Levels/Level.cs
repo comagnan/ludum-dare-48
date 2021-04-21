@@ -65,7 +65,7 @@ namespace LD48.Framework.Levels
 
             CollisionLayer = TiledMap.GetLayer<TiledMapTileLayer>("Collisions");
             TiledMapRenderer = new TiledMapRenderer(p_GraphicsDevice, TiledMap);
-            BoxingViewportAdapter viewport = new(p_Window, p_GraphicsDevice, 640, 360);
+            BoxingViewportAdapter viewport = new(p_Window, p_GraphicsDevice, 1280, 720);
             OrthographicCamera = new OrthographicCamera(viewport);
         }
 
