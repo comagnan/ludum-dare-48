@@ -75,6 +75,10 @@ namespace LD48
                 Exit();
             }
 
+            if (m_InputController.IsButtonPress(InputConfiguration.FullScreen)) {
+                m_Graphics.ToggleFullScreen();
+            }
+
             if (!m_TitleScreen.IsClosed) {
                 m_TitleScreen.Update(p_GameTime, m_InputController);
             } else if (m_PauseMenu.IsPausedOrTransitioning) {

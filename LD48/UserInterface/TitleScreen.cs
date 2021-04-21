@@ -4,6 +4,7 @@ using LD48.Framework.Input;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Media;
 
 namespace LD48.UserInterface
 {
@@ -15,6 +16,7 @@ namespace LD48.UserInterface
         private readonly Texture2D m_SelectionBubble;
 
         private readonly SpriteFont m_Font;
+        private readonly Song m_TitleScreenSong;
 
         // Graphics
         private TimeSpan m_TimeSinceButtonPress;
@@ -36,6 +38,9 @@ namespace LD48.UserInterface
             m_TitleScreenArt = p_Content.Load<Texture2D>("Interface/title_screen");
             m_SelectionBubble = p_Content.Load<Texture2D>("Interface/selection");
             m_Font = p_Content.Load<SpriteFont>("Dialogue");
+            m_TitleScreenSong = p_Content.Load<Song>("SFX/betterdays_todelete");
+            MediaPlayer.Play(m_TitleScreenSong);
+            MediaPlayer.IsRepeating = true;
 
             m_ShowHowTo = false;
             m_ShowCredits = false;
@@ -58,6 +63,7 @@ namespace LD48.UserInterface
                     switch (m_CurrentPointer) {
                         case 0:
                             IsClosed = true;
+                            MediaPlayer.Stop();
                             break;
                         case 1:
                             m_ShowHowTo = true;
@@ -96,7 +102,7 @@ namespace LD48.UserInterface
 
             if (m_ShowHowTo) {
                 p_SpriteBatch.DrawString(m_Font,
-                    "This is where the tutorial goes.",
+                    "This is where the tutorial goes.\n\nPress F to toggle full screen.",
                     new Vector2(100, 100),
                     Color.White,
                     0f,

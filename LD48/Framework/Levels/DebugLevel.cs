@@ -55,7 +55,7 @@ namespace LD48.Framework.Levels
 
             // Draw actors in drawing order (Includes Player)
             List<GameActor> actors = new() {
-                Player,
+                Player
             };
             actors.AddRange(InteractiveActors);
             

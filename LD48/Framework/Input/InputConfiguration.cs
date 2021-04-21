@@ -67,5 +67,13 @@ namespace LD48.Framework.Input
                     Keys.Enter
                 }
             };
+
+        public static CompositeInput FullScreen =>
+            new CompositeInput {
+                ButtonInputs = new List<Buttons> { Buttons.Back },
+                KeyInputs = new List<Keys> {
+                    Keys.F
+                }
+            };
     }
 }
