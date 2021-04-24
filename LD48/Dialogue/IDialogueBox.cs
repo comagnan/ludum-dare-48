@@ -11,6 +11,6 @@ namespace LD48.Dialogue
         int GetBufferSize();
         void Update(GameTime p_GameTime,
                     in InputController p_InputController);
-        void Draw(SpriteBatch p_SpriteBatch, GameTime p_GameTime);
+        void Draw(GameTime p_GameTime, SpriteBatch p_SpriteBatch);
     }
 }

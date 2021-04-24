@@ -6,7 +6,6 @@ namespace LD48.Actors
 {
     /// <summary>
     ///     Implementation of shared logic for all game actors
-    ///     (Player, bullet, enemies, etc.)
     /// </summary>
     public class GameActor : IGameActor
     {
@@ -23,11 +22,14 @@ namespace LD48.Actors
         }
 
         public virtual void Draw(GameTime p_GameTime,
-            SpriteBatch p_SpriteBatch)
+                                 SpriteBatch p_SpriteBatch)
         {
             if (CurrentVelocity.X < 0)
                 Flip = SpriteEffects.FlipHorizontally;
-            else if (CurrentVelocity.X > 0) Flip = SpriteEffects.None;
+            else if (CurrentVelocity.X > 0)
+            {
+                Flip = SpriteEffects.None;
+            }
         }
 
         public Vector2 GetPosition()
@@ -42,8 +44,20 @@ namespace LD48.Actors
 
         public double GetDistanceFrom(GameActor p_Other)
         {
-            (var x, var y) = CurrentPosition - p_Other.GetPosition();
+            (float x, float y) = CurrentPosition - p_Other.GetPosition();
             return Math.Sqrt(x * x + y * y);
+        }
+
+        public virtual Rectangle GetCollisionBox()
+        {
+            Point topLeft = new((int) (CurrentPosition.X - CollisionBoxSize.X / 2), (int) (CurrentPosition.Y - CollisionBoxSize.Y / 2));
+
+            return new Rectangle(topLeft.X, topLeft.Y, CollisionBoxSize.X, CollisionBoxSize.Y);
+        }
+
+        public bool IsSolid()
+        {
+            return Solid;
         }
 
         protected void MoveActor(GameTime p_GameTime)
@@ -53,22 +67,9 @@ namespace LD48.Actors
 
         protected Vector2 GetEstimatedPosition(GameTime p_GameTime)
         {
-            var dx = 100 * CurrentVelocity.X * p_GameTime.ElapsedGameTime.TotalSeconds;
-            var dy = 100 * CurrentVelocity.Y * p_GameTime.ElapsedGameTime.TotalSeconds;
+            double dx = 100 * CurrentVelocity.X * p_GameTime.ElapsedGameTime.TotalSeconds;
+            double dy = 100 * CurrentVelocity.Y * p_GameTime.ElapsedGameTime.TotalSeconds;
             return new Vector2(CurrentPosition.X + (float) dx, CurrentPosition.Y + (float) dy);
-        }
-
-        public virtual Rectangle GetCollisionBox()
-        {
-            Point topLeft = new((int) (CurrentPosition.X - CollisionBoxSize.X / 2),
-                (int) (CurrentPosition.Y - CollisionBoxSize.Y / 2));
-
-            return new Rectangle(topLeft.X, topLeft.Y, CollisionBoxSize.X, CollisionBoxSize.Y);
-        }
-
-        public bool IsSolid()
-        {
-            return Solid;
         }
     }
 }

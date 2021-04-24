@@ -97,17 +97,17 @@ namespace LD48.UserInterface
                          SpriteBatch p_SpriteBatch,
                          SpriteFont p_TitleFont)
         {
-            p_SpriteBatch.Draw(m_TitleScreenArt, new Rectangle(0, 0, 1280, 720), Color.White);
+            p_SpriteBatch.Draw(m_TitleScreenArt, new Rectangle(0, 0, 1920, 1080), Color.White);
             //Console.WriteLine(m_Font.MeasureString(GameInterface.GameTitle));
 
             if (m_ShowHowTo) {
                 p_SpriteBatch.DrawString(m_Font,
-                    "This is where the tutorial goes.\n\nPress F to toggle full screen.",
+                    "Your objective is to match a value with the longest maths equation possible.\nUse your keyboard to write your equation, then press Enter after you're done.\n+,-,/ and * are the accepted symbols for plus, minus, divided by and multiplied respectively.\nYou can use parenthesis! But only digits count towards par.\nGo for a high score! You can always go deeper.\nPress F to toggle full screen, and P to open the menu.",
                     new Vector2(100, 100),
                     Color.White,
                     0f,
                     Vector2.Zero,
-                    1f,
+                    0.5f,
                     SpriteEffects.None,
                     1f);
             } else if (m_ShowCredits) {

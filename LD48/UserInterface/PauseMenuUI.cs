@@ -74,7 +74,7 @@ namespace LD48.UserInterface
                          SpriteFont p_TitleFont)
         {
             if (IsPausedOrTransitioning) {
-                p_SpriteBatch.Draw(m_InternalResolution, new Rectangle(0, 0, 1280, 720), Color.Black * 0.75f);
+                p_SpriteBatch.Draw(m_InternalResolution, new Rectangle(0, 0, 1920, 1080), Color.Black * 0.75f);
 
                 p_SpriteBatch.Draw(m_BookmarkTexture, new Rectangle(150, -m_Offset, 300, 720), Color.White);
                 p_SpriteBatch.Draw(m_SelectionBubble,

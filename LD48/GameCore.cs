@@ -1,7 +1,6 @@
 ﻿using System.Globalization;
 using LD48.Framework.Input;
 using LD48.Framework.Levels;
-using LD48.Tools;
 using LD48.UserInterface;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -10,8 +9,7 @@ namespace LD48
 {
     public class GameCore : Game
     {
-        private const string BASE_GAME_TITLE = "Ludum Dare 48";
-        private readonly FrameCounter m_FrameCounter;
+        private const string BASE_GAME_TITLE = "Fairies of Galaxia";
 
         private readonly GraphicsDeviceManager m_Graphics;
 
@@ -31,13 +29,8 @@ namespace LD48
         public GameCore()
         {
             m_Graphics = new GraphicsDeviceManager(this);
-            m_FrameCounter = new FrameCounter();
             Content.RootDirectory = "Content";
             IsMouseVisible = false;
-
-            // Unlock framerate.
-            //m_Graphics.SynchronizeWithVerticalRetrace = false;
-            //IsFixedTimeStep = false;
 
             m_InputController = new InputController();
             m_CurrentLevel = new DebugLevel(Content);
@@ -47,9 +40,10 @@ namespace LD48
         {
             base.Initialize();
 
-            m_InternalResolution = new RenderTarget2D(GraphicsDevice, 1280, 720);
-            m_Graphics.PreferredBackBufferWidth = 1280;
-            m_Graphics.PreferredBackBufferHeight = 720;
+            m_InternalResolution = new RenderTarget2D(GraphicsDevice, 1920, 1080);
+            m_Graphics.PreferredBackBufferWidth = 1920;
+            m_Graphics.PreferredBackBufferHeight = 1080;
+            m_Graphics.IsFullScreen = true;
             m_Graphics.ApplyChanges();
 
             m_TitleScreen = new TitleScreen(m_InternalResolution, Content);
@@ -89,7 +83,6 @@ namespace LD48
                 }
 
                 m_CurrentLevel.Update(p_GameTime, m_InputController);
-                m_FrameCounter.Update(p_GameTime);
             }
         }
 
@@ -105,15 +98,11 @@ namespace LD48
             // Zoom to screen.
             GraphicsDevice.SetRenderTarget(null);
             m_SpriteBatch.Begin(samplerState: SamplerState.PointClamp);
-            m_SpriteBatch.Draw(m_InternalResolution, new Rectangle(0, 0, 1280, 720), Color.White);
+            m_SpriteBatch.Draw(m_InternalResolution, new Rectangle(0, 0, 1920, 1080), Color.White);
 
             // Draw UI at native resolution.
             if (m_TitleScreen.IsClosed) {
                 m_CurrentLevel.DrawInterface(p_GameTime, m_SpriteBatch, m_TitleFont);
-                m_SpriteBatch.DrawString(m_TitleFont,
-                    m_FrameCounter.AverageFramesPerSecond.ToString(CultureInfo.InvariantCulture),
-                    new Vector2(1200, 50),
-                    Color.Yellow);
                 m_PauseMenu.Draw(p_GameTime, m_SpriteBatch, m_TitleFont);
             } else {
                 m_TitleScreen.Draw(p_GameTime, m_SpriteBatch, m_TitleFont);

@@ -117,8 +117,7 @@ namespace LD48.Dialogue
             }
         }
 
-        public void Draw(SpriteBatch p_SpriteBatch,
-                         GameTime p_GameTime)
+        public void Draw(GameTime p_GameTime, SpriteBatch p_SpriteBatch)
         {
             if (!m_IsInitialized) {
                 Initialize(p_SpriteBatch);
