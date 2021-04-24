@@ -50,4 +50,7 @@
       <DesignTime>True</DesignTime>
     </Compile>
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Framework\TextBox" />
+  </ItemGroup>
 </Project>

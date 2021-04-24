@@ -1,6 +1,6 @@
-﻿using System.Globalization;
-using LD48.Framework.Input;
+﻿using LD48.Framework.Input;
 using LD48.Framework.Levels;
+using LD48.Framework.TextBox;
 using LD48.UserInterface;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -30,7 +30,8 @@ namespace LD48
         {
             m_Graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-            IsMouseVisible = false;
+            
+            KeyboardInput.Initialize(this, 500f, 20);
 
             m_InputController = new InputController();
             m_CurrentLevel = new DebugLevel(Content);
@@ -64,6 +65,7 @@ namespace LD48
         {
             base.Update(p_GameTime);
             m_InputController.UpdateState();
+            KeyboardInput.Update();
 
             if (m_InputController.IsButtonDown(InputConfiguration.Exit) || m_TitleScreen.ExitGame) {
                 Exit();
