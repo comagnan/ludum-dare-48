@@ -225,6 +225,12 @@
 /processorParam:TextureFormat=Color
 /build:Portraits/Sign.png
 
+#begin SFX/add.mp3
+/importer:Mp3Importer
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:SFX/add.mp3
+
 #begin SFX/alexis_dialogue.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
@@ -236,6 +242,12 @@
 /processor:SongProcessor
 /processorParam:Quality=Best
 /build:SFX/betterdays_todelete.mp3
+
+#begin SFX/delete.mp3
+/importer:Mp3Importer
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:SFX/delete.mp3
 
 #begin sky.jpg
 /importer:TextureImporter

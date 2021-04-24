@@ -5,56 +5,9 @@ using Microsoft.Xna.Framework.Input;
 
 namespace LD48.Framework.TextBox
 {
-    /// <summary>
-    ///     All printable characters are returned using the CharPressed event and captured using the Game.Window.TextInput
-    ///     event exposed by MonoGame.
-    ///     Those automatically honor keyboard-layout and repeat-frequency of the keyboard for all platforms.
-    ///     The flag filterSpecialCharactersFromCharPressed you may specify when calling Initialize tells the class to filter
-    ///     those characters exposed in the SpecialCharacters char[] or not.
-    ///     When running on a OpenGl-system those characters are not captured by the system. So the default for filtering them
-    ///     out is for the sake of compatibility.
-    ///     The repetition of the special characters as well as the arrow keys, etc, is handled by the class itself using the
-    ///     values you pass it when calling Initialize.
-    ///     The repetition is not done by sending the characters through the CharPressed event (since they may be not even
-    ///     characters and some of them are omitted by the OpenGl platform), but through the KeyPressed event and the keys are
-    ///     captured by getting the KeyboardState from MonoGame in the Update-method.
-    ///     So if you want to capture those, use that one.
-    ///     The KeyDown and KeyUp event are standard events being getting the KeyboardState from MonoGame in the Update-method.
-    /// </summary>
     public static class KeyboardInput
     {
-        public class CharacterEventArgs : EventArgs
-        {
-            public char Character { get; private set; }
-
-            public CharacterEventArgs(char character)
-            {
-                Character = character;
-            }
-        }
-
-        public class KeyEventArgs : EventArgs
-        {
-            public Keys KeyCode { get; private set; }
-
-            public KeyEventArgs(Keys keyCode)
-            {
-                KeyCode = keyCode;
-            }
-        }
-
-        public delegate void CharEnteredHandler(object sender, CharacterEventArgs e, KeyboardState ks);
-
-        public delegate void KeyEventHandler(object sender, KeyEventArgs e, KeyboardState ks);
-
-        public static readonly char[] SPECIAL_CHARACTERS = {'\a', '\n', '\r', '\f', '\t', '\v'};
-
-        private static Game game;
-
-        public static event CharEnteredHandler CharPressed;
-        public static event KeyEventHandler KeyPressed;
-        public static event KeyEventHandler KeyDown;
-        public static event KeyEventHandler KeyUp;
+        private static Game s_Game;
 
         private static KeyboardState prevKeyState;
 
@@ -64,13 +17,14 @@ namespace LD48.Framework.TextBox
         private static int repsPerSec;
         private static DateTime lastRep = DateTime.Now;
 
-        public static void Initialize(Game g, float timeUntilRepInMilliseconds, int repsPerSecond)
-        {
-            game = g;
-            timeUntilRepInMillis = timeUntilRepInMilliseconds;
-            repsPerSec = repsPerSecond;
-            game.Window.TextInput += TextEntered;
-        }
+        public static readonly char[] s_SpecialCharacters = {
+            '\a',
+            '\n',
+            '\r',
+            '\f',
+            '\t',
+            '\v'
+        };
 
         public static bool ShiftDown
         {
@@ -90,58 +44,60 @@ namespace LD48.Framework.TextBox
             }
         }
 
-        private static void TextEntered(object sender, TextInputEventArgs e)
+        public delegate void CharEnteredHandler(object sender,
+                                                CharacterEventArgs e,
+                                                KeyboardState ks);
+
+        public delegate void KeyEventHandler(object sender,
+                                             KeyEventArgs e,
+                                             KeyboardState ks);
+
+        public static event CharEnteredHandler CharPressed;
+        public static event KeyEventHandler KeyPressed;
+        public static event KeyEventHandler KeyDown;
+        public static event KeyEventHandler KeyUp;
+
+        public static void Initialize(Game g,
+                                      float timeUntilRepInMilliseconds,
+                                      int repsPerSecond)
         {
-            if (CharPressed != null)
-            {
-                if (!SPECIAL_CHARACTERS.Contains(e.Character))
-                {
-                    CharPressed(null, new CharacterEventArgs(e.Character), Keyboard.GetState());
-                }
-            }
+            s_Game = g;
+            timeUntilRepInMillis = timeUntilRepInMilliseconds;
+            repsPerSec = repsPerSecond;
+            s_Game.Window.TextInput += TextEntered;
         }
 
         public static void Update()
         {
             KeyboardState keyState = Keyboard.GetState();
 
-            foreach (Keys key in (Keys[]) Enum.GetValues(typeof(Keys)))
-            {
-                if (JustPressed(keyState, key))
-                {
+            foreach (Keys key in (Keys[]) Enum.GetValues(typeof(Keys))) {
+                if (JustPressed(keyState, key)) {
                     KeyDown?.Invoke(null, new KeyEventArgs(key), keyState);
-                    if (KeyPressed != null)
-                    {
+                    if (KeyPressed != null) {
                         downSince = DateTime.Now;
                         repChar = key;
                         KeyPressed(null, new KeyEventArgs(key), keyState);
                     }
-                }
-                else if (JustReleased(keyState, key))
-                {
-                    if (KeyUp != null)
-                    {
-                        if (repChar == key)
-                        {
+                } else if (JustReleased(keyState, key)) {
+                    if (KeyUp != null) {
+                        if (repChar == key) {
                             repChar = null;
                         }
+
                         KeyUp(null, new KeyEventArgs(key), keyState);
                     }
                 }
 
-                if (repChar != null && repChar == key && keyState.IsKeyDown(key))
-                {
+                if (repChar != null && repChar == key && keyState.IsKeyDown(key)) {
                     DateTime now = DateTime.Now;
                     TimeSpan downFor = now.Subtract(downSince);
-                    if (downFor.CompareTo(TimeSpan.FromMilliseconds(timeUntilRepInMillis)) > 0)
-                    {
+                    if (downFor.CompareTo(TimeSpan.FromMilliseconds(timeUntilRepInMillis)) > 0) {
                         // Should repeat since the wait time is over now.
                         TimeSpan repeatSince = now.Subtract(lastRep);
-                        if (repeatSince.CompareTo(TimeSpan.FromMilliseconds(1000f / repsPerSec)) > 0)
-                        {
+                        if (repeatSince.CompareTo(TimeSpan.FromMilliseconds(1000f / repsPerSec)) > 0) {
                             // Time for another key-stroke.
-                            if (KeyPressed != null)
-                            {
+                            if (KeyPressed != null) {
                                 lastRep = now;
                                 KeyPressed(null, new KeyEventArgs(key), keyState);
                             }
@@ -153,22 +109,54 @@ namespace LD48.Framework.TextBox
             prevKeyState = keyState;
         }
 
-        private static bool JustPressed(KeyboardState keyState, Keys key)
-        {
-            return keyState.IsKeyDown(key) && prevKeyState.IsKeyUp(key);
-        }
-
-        private static bool JustReleased(KeyboardState keyState, Keys key)
-        {
-            return prevKeyState.IsKeyDown(key) && keyState.IsKeyUp(key);
-        }
-
         public static void Dispose()
         {
             CharPressed = null;
             KeyDown = null;
             KeyPressed = null;
             KeyUp = null;
+        }
+
+        private static void TextEntered(object sender,
+                                        TextInputEventArgs e)
+        {
+            if (CharPressed != null) {
+                if (!s_SpecialCharacters.Contains(e.Character)) {
+                    CharPressed(null, new CharacterEventArgs(e.Character), Keyboard.GetState());
+                }
+            }
+        }
+
+        private static bool JustPressed(KeyboardState keyState,
+                                        Keys key)
+        {
+            return keyState.IsKeyDown(key) && prevKeyState.IsKeyUp(key);
+        }
+
+        private static bool JustReleased(KeyboardState keyState,
+                                         Keys key)
+        {
+            return prevKeyState.IsKeyDown(key) && keyState.IsKeyUp(key);
+        }
+
+        public class CharacterEventArgs : EventArgs
+        {
+            public char Character { get; private set; }
+
+            public CharacterEventArgs(char character)
+            {
+                Character = character;
+            }
+        }
+
+        public class KeyEventArgs : EventArgs
+        {
+            public Keys KeyCode { get; private set; }
+
+            public KeyEventArgs(Keys keyCode)
+            {
+                KeyCode = keyCode;
+            }
         }
     }
 }

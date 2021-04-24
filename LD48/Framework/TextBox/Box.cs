@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
@@ -34,6 +35,9 @@ namespace LD48.Framework.TextBox
         public readonly Text Text;
         public readonly TextRenderer Renderer;
         public readonly Cursor Cursor;
+
+        private SoundEffect m_KeyPressEffect;
+        private SoundEffect m_RemoveEffect;
         public GraphicsDevice GraphicsDevice { get; set; }
 
         public Rectangle Area
@@ -50,8 +54,6 @@ namespace LD48.Framework.TextBox
 
         public bool Active = true;
 
-        public event EventHandler<KeyboardInput.KeyEventArgs> EnterDown;
-
         public Box(Rectangle area,
                    int maxCharacters,
                    string text,
@@ -59,7 +61,9 @@ namespace LD48.Framework.TextBox
                    SpriteFont spriteFont,
                    Color cursorColor,
                    Color selectionColor,
-                   int ticksPerToggle)
+                   int ticksPerToggle,
+                   SoundEffect p_AddSoundEffect,
+                   SoundEffect p_RemoveSoundEffect)
         {
             GraphicsDevice = graphicsDevice;
 
@@ -75,6 +79,9 @@ namespace LD48.Framework.TextBox
 
             KeyboardInput.CharPressed += CharacterTyped;
             KeyboardInput.KeyPressed += KeyPressed;
+
+            m_KeyPressEffect = p_AddSoundEffect;
+            m_RemoveEffect = p_RemoveSoundEffect;
         }
 
         public void Dispose()
@@ -162,9 +169,6 @@ namespace LD48.Framework.TextBox
             if (Active) {
                 int oldPos = Cursor.TextCursor;
                 switch (e.KeyCode) {
-                    case Keys.Enter:
-                        EnterDown?.Invoke(this, e);
-                        break;
                     case Keys.Left:
                         if (KeyboardInput.CtrlDown) {
                             Cursor.TextCursor = IndexOfLastCharBeforeWhitespace(Cursor.TextCursor, Text.Characters);
@@ -193,12 +197,14 @@ namespace LD48.Framework.TextBox
                         break;
                     case Keys.Delete:
                         if (DelSelection() == null && Cursor.TextCursor < Text.Length) {
+                            m_RemoveEffect.Play();
                             Text.RemoveCharacters(Cursor.TextCursor, Cursor.TextCursor + 1);
                         }
 
                         break;
                     case Keys.Back:
                         if (DelSelection() == null && Cursor.TextCursor > 0) {
+                            m_RemoveEffect.Play();
                             Text.RemoveCharacters(Cursor.TextCursor - 1, Cursor.TextCursor);
                             Cursor.TextCursor--;
                         }
@@ -256,15 +262,16 @@ namespace LD48.Framework.TextBox
             }
         }
 
-        private void CharacterTyped(object sender,
-                                    KeyboardInput.CharacterEventArgs e,
-                                    KeyboardState ks)
+        private void CharacterTyped(object p_Sender,
+                                    KeyboardInput.CharacterEventArgs p_E,
+                                    KeyboardState p_Ks)
         {
             if (Active && !KeyboardInput.CtrlDown) {
-                if (IsLegalCharacter(Renderer.Font, e.Character) && !e.Character.Equals('\r') && !e.Character.Equals('\n')) {
+                if (IsLegalCharacter(Renderer.Font, p_E.Character) && !p_E.Character.Equals('\r') && !p_E.Character.Equals('\n')) {
                     DelSelection();
                     if (Text.Length < Text.MaxLength) {
-                        Text.InsertCharacter(Cursor.TextCursor, e.Character);
+                        m_KeyPressEffect.Play();
+                        Text.InsertCharacter(Cursor.TextCursor, p_E.Character);
                         Cursor.TextCursor++;
                     }
                 }
