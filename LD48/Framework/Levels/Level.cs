@@ -84,8 +84,7 @@ namespace LD48.Framework.Levels
                                  SpriteBatch p_SpriteBatch)
         {
             p_SpriteBatch.Draw(Background, new Rectangle(0, 0, 1920, 1080), Color.White);
-            DialogueBox.Draw(p_GameTime, p_SpriteBatch);
-            p_SpriteBatch.Draw(Mascot, new Rectangle(1395, 450, 500, 600), Color.White);
+            p_SpriteBatch.Draw(Mascot, new Vector2(1645, 750), new Rectangle(0, 0, 500, 600), Color.White, (float) Math.Sin(p_GameTime.TotalGameTime.TotalSeconds)/4f, new Vector2(250, 300), 1f, SpriteEffects.None, 1f);
             TextBox.Draw(p_SpriteBatch);
         }
 
@@ -125,6 +124,7 @@ namespace LD48.Framework.Levels
                 SpriteEffects.None,
                 1f);
             RenderBank(p_SpriteBatch, EquationFont);
+            DialogueBox.Draw(p_GameTime, p_SpriteBatch);
         }
 
         protected string GetCurrentResult()
@@ -136,7 +136,7 @@ namespace LD48.Framework.Levels
                 }
 
                 return decimal.Round(currentValue, 2).ToString(CultureInfo.InvariantCulture);
-            } catch (Exception e) {
+            } catch (Exception) {
                 return "???";
             }
         }

@@ -47,6 +47,15 @@ namespace LD48.Framework.Input
                 KeyInputs = new List<Keys> { Keys.X }
             };
 
+        public static CompositeInput Submit =>
+            new CompositeInput {
+                ButtonInputs = new List<Buttons> { Buttons.A },
+                KeyInputs = new List<Keys> {
+                    Keys.X,
+                    Keys.Enter
+                }
+            };
+
         public static CompositeInput Return =>
             new() {
                 ButtonInputs = new List<Buttons> { Buttons.B },
@@ -63,8 +72,7 @@ namespace LD48.Framework.Input
             new CompositeInput {
                 ButtonInputs = new List<Buttons> { Buttons.Start },
                 KeyInputs = new List<Keys> {
-                    Keys.P,
-                    Keys.Enter
+                    Keys.P
                 }
             };
 
