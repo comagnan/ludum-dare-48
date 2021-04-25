@@ -31,13 +31,8 @@ namespace LD48.Framework.Levels
             };
             GoalValue = 27;
             LevelPar = 3;
+            LevelZenPar = 7;
             LevelWarning = "Use at most five operators!";
-        }
-
-        public override void Initialize(GameWindow p_Window,
-                                        GraphicsDevice p_GraphicsDevice)
-        {
-            base.Initialize(p_Window, p_GraphicsDevice);
         }
 
         public override void Update(GameTime p_GameTime,

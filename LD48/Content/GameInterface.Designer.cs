@@ -151,6 +151,15 @@ namespace LD48.Content {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Main Menu.
+        /// </summary>
+        internal static string MainMenu {
+            get {
+                return ResourceManager.GetString("MainMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Mana.
         /// </summary>
         internal static string Mana {

@@ -31,6 +31,7 @@ namespace LD48.Framework.Levels
             };
             GoalValue = 13;
             LevelPar = 6;
+            LevelZenPar = 8;
             LevelWarning = "\"-\" is forbidden!";
         }
 

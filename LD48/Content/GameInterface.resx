@@ -84,4 +84,7 @@
     <data name="Credits" xml:space="preserve">
         <value>Credits</value>
     </data>
+    <data name="MainMenu" xml:space="preserve">
+        <value>Main Menu</value>
+    </data>
 </root>

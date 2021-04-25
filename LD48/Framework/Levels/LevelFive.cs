@@ -33,12 +33,6 @@ namespace LD48.Framework.Levels
             LevelWarning = "Only use numbers with 2+ digits!";
         }
 
-        public override void Initialize(GameWindow p_Window,
-                                        GraphicsDevice p_GraphicsDevice)
-        {
-            base.Initialize(p_Window, p_GraphicsDevice);
-        }
-
         public override void Update(GameTime p_GameTime,
                                     in InputController p_InputController)
         {
@@ -57,6 +51,26 @@ namespace LD48.Framework.Levels
             base.Draw(p_GameTime, p_SpriteBatch);
 
             p_SpriteBatch.End();
+        }
+
+        protected override bool IsEquationValid()
+        {
+            string equation = TextBox.Text.String;
+            for (int i = 0; i < equation.Length; i++) {
+                if (!char.IsDigit(equation[i])) {
+                    continue;
+                }
+
+                if (i != 0 && char.IsDigit(equation[i - 1])) {
+                    continue;
+                }
+
+                if (i == equation.Length - 1 || !char.IsDigit(equation[i + 1])) {
+                    throw new PuzzleUnsolvedException("Whoops! There's a number with only one digit in there.");
+                }
+            }
+
+            return base.IsEquationValid();
         }
     }
 }

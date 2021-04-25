@@ -10,7 +10,7 @@ namespace LD48.UserInterface
     public class PauseMenuUI : IUserInterface
     {
         private const int ITEM_DISTANCE = 70;
-        private const int MAXIMUM_POINTER = 6;
+        private const int MAXIMUM_POINTER = 2;
         private const int OFFSCREEN_OFFSET = 700;
         private const int MOVEMENT_VELOCITY = 3;
         private readonly Texture2D m_BookmarkTexture;
@@ -26,6 +26,8 @@ namespace LD48.UserInterface
         public bool IsPausedOrTransitioning => Paused || m_Offset < OFFSCREEN_OFFSET;
 
         public bool Paused { get; set; }
+        public bool ReturnToMainMenu { get; set; }
+        public bool ExitRequested { get; set; }
 
         public PauseMenuUI(RenderTarget2D p_InternalResolution,
                            ContentManager p_Content)
@@ -37,6 +39,8 @@ namespace LD48.UserInterface
             m_Font = p_Content.Load<SpriteFont>("Dialogue");
 
             Paused = false;
+            ReturnToMainMenu = false;
+            ExitRequested = false;
             m_Offset = OFFSCREEN_OFFSET;
             m_CurrentPointer = 0;
         }
@@ -51,6 +55,13 @@ namespace LD48.UserInterface
                     if ((p_InputController.IsButtonPress(InputConfiguration.Confirm) && m_CurrentPointer == 0)
                         || p_InputController.IsButtonPress(InputConfiguration.Pause)) {
                         Paused = false;
+                    } else if (p_InputController.IsButtonPress(InputConfiguration.Confirm)) {
+                        Paused = false;
+                        if (m_CurrentPointer == 1) {
+                            ReturnToMainMenu = true;
+                        } else {
+                            ExitRequested = true;
+                        }
                     } else if (p_InputController.IsButtonPress(InputConfiguration.Down)) {
                         m_CurrentPointer++;
                         if (m_CurrentPointer > MAXIMUM_POINTER) {
@@ -83,61 +94,25 @@ namespace LD48.UserInterface
                 p_SpriteBatch.DrawString(m_Font,
                     GameInterface.Resume,
                     new Vector2(200, 97 - m_Offset),
-                    Color.Black,
+                    Color.White,
                     0f,
                     Vector2.Zero,
                     0.75f,
                     SpriteEffects.None,
                     1f);
                 p_SpriteBatch.DrawString(m_Font,
-                    GameInterface.Collection,
+                    GameInterface.MainMenu,
                     new Vector2(200, 97 + ITEM_DISTANCE - m_Offset),
-                    Color.Black,
+                    Color.White,
                     0f,
                     Vector2.Zero,
                     0.75f,
                     SpriteEffects.None,
                     1f);
                 p_SpriteBatch.DrawString(m_Font,
-                    GameInterface.History,
+                    GameInterface.Quit,
                     new Vector2(200, 97 + 2 * ITEM_DISTANCE - m_Offset),
-                    Color.Black,
-                    0f,
-                    Vector2.Zero,
-                    0.75f,
-                    SpriteEffects.None,
-                    1f);
-                p_SpriteBatch.DrawString(m_Font,
-                    GameInterface.Options,
-                    new Vector2(200, 97 + 3 * ITEM_DISTANCE - m_Offset),
-                    Color.Black,
-                    0f,
-                    Vector2.Zero,
-                    0.75f,
-                    SpriteEffects.None,
-                    1f);
-                p_SpriteBatch.DrawString(m_Font,
-                    GameInterface.Restart,
-                    new Vector2(200, 97 + 4 * ITEM_DISTANCE - m_Offset),
-                    Color.Black,
-                    0f,
-                    Vector2.Zero,
-                    0.75f,
-                    SpriteEffects.None,
-                    1f);
-                p_SpriteBatch.DrawString(m_Font,
-                    GameInterface.Home,
-                    new Vector2(200, 97 + 5 * ITEM_DISTANCE - m_Offset),
-                    Color.Black,
-                    0f,
-                    Vector2.Zero,
-                    0.75f,
-                    SpriteEffects.None,
-                    1f);
-                p_SpriteBatch.DrawString(m_Font,
-                    GameInterface.Save_Quit,
-                    new Vector2(200, 97 + 6 * ITEM_DISTANCE - m_Offset),
-                    Color.Black,
+                    Color.White,
                     0f,
                     Vector2.Zero,
                     0.75f,

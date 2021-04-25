@@ -72,7 +72,7 @@ namespace LD48.Framework.TextBox
             Renderer = new TextRenderer(this) {
                 Area = area,
                 Font = spriteFont,
-                Color = Color.Black
+                Color = Color.White
             };
 
             Cursor = new Cursor(this, cursorColor, selectionColor, new Rectangle(0, 0, 1, 1), ticksPerToggle);

@@ -30,12 +30,7 @@ namespace LD48.Framework.Levels
             };
             GoalValue = 9;
             LevelPar = 6;
-        }
-
-        public override void Initialize(GameWindow p_Window,
-                                        GraphicsDevice p_GraphicsDevice)
-        {
-            base.Initialize(p_Window, p_GraphicsDevice);
+            LevelZenPar = 8;
         }
 
         public override void Update(GameTime p_GameTime,

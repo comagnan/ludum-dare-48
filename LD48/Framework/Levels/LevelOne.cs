@@ -34,12 +34,6 @@ namespace LD48.Framework.Levels
             });
         }
 
-        public override void Initialize(GameWindow p_Window,
-                                        GraphicsDevice p_GraphicsDevice)
-        {
-            base.Initialize(p_Window, p_GraphicsDevice);
-        }
-
         public override void Update(GameTime p_GameTime,
                                     in InputController p_InputController)
         {

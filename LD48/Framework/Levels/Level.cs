@@ -27,14 +27,16 @@ namespace LD48.Framework.Levels
         protected int LevelPar;
         protected string LevelName;
         protected string LevelWarning;
+        protected int LevelZenPar;
 
-        // GET CUSTOM OBJECT FOR THIS EVENTUALLY
         protected GraphicsDevice GraphicsDevice;
         protected Texture2D Rectangle;
         protected Texture2D Background;
-        protected Texture2D Mascot;
         protected Texture2D Rule;
         protected Box TextBox;
+
+        protected Texture2D ClaireDefault;
+        protected Texture2D ClaireZen;
 
         protected SpriteFont EquationFont;
 
@@ -54,6 +56,7 @@ namespace LD48.Framework.Levels
             LevelId = p_LevelId;
             GoalValue = 9;
             LevelPar = 3;
+            LevelZenPar = 6;
             m_Table = new DataTable();
             NumberBank = new List<char>();
             IsLevelOver = false;
@@ -74,7 +77,8 @@ namespace LD48.Framework.Levels
             Rectangle.SetData(new[] { Color.White });
 
             Background = Content.Load<Texture2D>("Interface/stage");
-            Mascot = Content.Load<Texture2D>("Interface/mascot");
+            ClaireDefault = Content.Load<Texture2D>("Interface/mascot");
+            ClaireZen = Content.Load<Texture2D>("Interface/claire_zen");
             EquationFont = Content.Load<SpriteFont>("Title");
             Rule = Content.Load<Texture2D>("Interface/rule");
 
@@ -122,15 +126,7 @@ namespace LD48.Framework.Levels
         {
             p_SpriteBatch.Draw(Rectangle, new Rectangle(0, 0, 1920, 1080), Color.LightGreen);
             p_SpriteBatch.Draw(Background, new Rectangle(0, 0, 1920, 1080), Color.White);
-            p_SpriteBatch.Draw(Mascot,
-                new Vector2(1645, 750),
-                new Rectangle(0, 0, 500, 600),
-                Color.White,
-                (float) Math.Sin(p_GameTime.TotalGameTime.TotalSeconds / 2f) / 8f,
-                new Vector2(250, 300),
-                1f,
-                SpriteEffects.None,
-                1f);
+            
             TextBox.Draw(p_SpriteBatch);
         }
 
@@ -149,7 +145,7 @@ namespace LD48.Framework.Levels
                 1f);
             p_SpriteBatch.DrawString(p_SpriteFont,
                 $"{GetCurrentResult() ?? "?"}",
-                new Vector2(1720, 400),
+                new Vector2(1720, 380),
                 Color.Black,
                 0f,
                 p_SpriteFont.MeasureString(GetCurrentResult()) / 2,
@@ -197,7 +193,7 @@ namespace LD48.Framework.Levels
                     SpriteEffects.None,
                     1f);
             }
-
+            DrawClaire(p_GameTime, p_SpriteBatch);
             DialogueBox.Draw(p_GameTime, p_SpriteBatch);
         }
 
@@ -234,7 +230,8 @@ namespace LD48.Framework.Levels
             }
 
             bool respectsBank = true;
-            List<char> bankCopy = NumberBank.ToList();
+            List<char> bankCopy = new List<char>();
+            bankCopy.AddRange(NumberBank);
             foreach (char character in TextBox.Text.Characters) {
                 if (char.IsDigit(character)) {
                     if (bankCopy.Contains(character)) {
@@ -250,6 +247,33 @@ namespace LD48.Framework.Levels
             }
 
             return scorePositive && correctValue && respectsBank;
+        }
+
+        protected void DrawClaire(GameTime p_GameTime,
+                                  SpriteBatch p_SpriteBatch)
+        {
+            if (GetScore() >= LevelZenPar) {
+                p_SpriteBatch.Draw(ClaireZen,
+                    new Vector2(1645, 750 + 20 * (float) Math.Sin(p_GameTime.TotalGameTime.TotalSeconds / 2f)),
+                    new Rectangle(0, 0, 500, 600),
+                    Color.White,
+                    (float) Math.Sin(p_GameTime.TotalGameTime.TotalSeconds / 8f) / 16f,
+                    new Vector2(250, 300),
+                    1f,
+                    SpriteEffects.None,
+                    1f);
+                
+            } else {
+                p_SpriteBatch.Draw(ClaireDefault,
+                    new Vector2(1645, 750),
+                    new Rectangle(0, 0, 500, 600),
+                    Color.White,
+                    (float) Math.Sin(p_GameTime.TotalGameTime.TotalSeconds / 2f) / 8f,
+                    new Vector2(250, 300),
+                    1f,
+                    SpriteEffects.None,
+                    1f);
+            }
         }
 
         private void RenderBank(SpriteBatch p_SpriteBatch,

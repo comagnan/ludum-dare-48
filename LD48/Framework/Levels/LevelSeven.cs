@@ -32,6 +32,7 @@ namespace LD48.Framework.Levels
             };
             GoalValue = 17;
             LevelPar = 5;
+            LevelZenPar = 8;
             LevelWarning = "You must use all sevens!";
         }
 

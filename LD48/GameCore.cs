@@ -79,6 +79,14 @@ namespace LD48
                 m_TitleScreen.Update(p_GameTime, m_InputController);
             } else if (m_PauseMenu.IsPausedOrTransitioning) {
                 m_PauseMenu.Update(p_GameTime, m_InputController);
+                if (m_PauseMenu.ExitRequested) {
+                    Exit();
+                } else if (m_PauseMenu.ReturnToMainMenu) {
+                    m_CurrentLevel = new LevelOne(Content);
+                    m_CurrentLevel.Initialize(Window, GraphicsDevice);
+                    m_TitleScreen.IsClosed = false;
+                    m_PauseMenu = new PauseMenuUI(m_InternalResolution, Content);
+                }
             } else {
                 if (m_InputController.IsButtonPress(InputConfiguration.Pause)) {
                     m_PauseMenu.Paused = !m_PauseMenu.Paused;
@@ -86,7 +94,8 @@ namespace LD48
 
                 m_CurrentLevel.Update(p_GameTime, m_InputController);
                 if (m_CurrentLevel.IsLevelOver) {
-                    switch (m_CurrentLevel.LevelId) {
+                    int levelId = m_CurrentLevel.LevelId;
+                    switch (levelId) {
                         case 1:
                             m_CurrentLevel = new LevelTwo(Content);
                             break;
