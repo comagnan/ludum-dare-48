@@ -25,6 +25,8 @@ namespace LD48.Framework.Levels
         protected List<char> NumberBank;
         protected int GoalValue;
         protected int LevelPar;
+        protected string LevelName;
+        protected string LevelWarning;
         public readonly int LevelId;
 
         // GET CUSTOM OBJECT FOR THIS EVENTUALLY
@@ -42,7 +44,8 @@ namespace LD48.Framework.Levels
         public bool IsLevelOver { get; protected set; }
 
         public Level(ContentManager p_Content,
-                     int p_LevelId)
+                     int p_LevelId,
+                     string p_LevelName)
         {
             // Create a new content manager to load content used just by this level.
             Content = p_Content;
@@ -94,11 +97,17 @@ namespace LD48.Framework.Levels
                 TextBox.Update();
 
                 if (p_InputController.IsButtonPress(InputConfiguration.Submit)) {
-                    if (IsEquationValid()) {
+                    try {
+                        if (IsEquationValid()) {
+                            DialogueBox.AddText(new DialogueEntry {
+                                Text = "Congratulations!",
+                                Sprite = GameInterface.Beatrice,
+                                Callback = () => IsLevelOver = true
+                            });
+                        }
+                    } catch (PuzzleUnsolvedException e) {
                         DialogueBox.AddText(new DialogueEntry {
-                            Text = "Congratulations!",
-                            Sprite = GameInterface.Beatrice,
-                            Callback = () => IsLevelOver = true
+                            Text = e.Message
                         });
                     }
                 }
@@ -182,8 +191,16 @@ namespace LD48.Framework.Levels
 
         protected virtual bool IsEquationValid()
         {
-            bool scorePositive = GetScore() >= 0;
             bool correctValue = GoalValue.ToString() == GetCurrentResult();
+            if (!correctValue) {
+                throw new PuzzleUnsolvedException($"Wrong! We're looking for an equation that equals {GoalValue}.");
+            }
+            
+            
+            bool scorePositive = GetScore() >= 0;
+            if (!scorePositive) {
+                throw new PuzzleUnsolvedException("Your equation is BORING! You have to go deeper!");
+            }
 
             bool respectsBank = true;
             List<char> bankCopy = NumberBank.ToList();
@@ -196,6 +213,10 @@ namespace LD48.Framework.Levels
                         respectsBank = false;
                     }
                 }
+            }
+
+            if (!respectsBank) {
+                throw new PuzzleUnsolvedException("Not quite -- you've used illegal digits in there! Check the allowed digits in the bank.");
             }
 
             return scorePositive && correctValue && respectsBank;

@@ -9,12 +9,12 @@ using MonoGame.Extended.Sprites;
 
 namespace LD48.Framework.Levels
 {
-    public class SecondLevel : Level
+    public class LevelTwo : Level
     {
         /// <summary>
         /// Constructs a new level.
         /// </summary>
-        public SecondLevel(ContentManager p_Content) : base(p_Content, 2)
+        public LevelTwo(ContentManager p_Content) : base(p_Content, 2, "Go home")
         {
             NumberBank = new List<char> {
                 '1',

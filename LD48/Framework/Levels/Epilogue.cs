@@ -14,7 +14,7 @@ namespace LD48.Framework.Levels
         /// <summary>
         /// Constructs a new level.
         /// </summary>
-        public Epilogue(ContentManager p_Content) : base(p_Content, 8)
+        public Epilogue(ContentManager p_Content) : base(p_Content, 8, "Thanks for playing!")
         {
             NumberBank = new List<char> {
                 '0',

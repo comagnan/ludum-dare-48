@@ -34,7 +34,7 @@ namespace LD48
             KeyboardInput.Initialize(this, 500f, 20);
 
             m_InputController = new InputController();
-            m_CurrentLevel = new FirstLevel(Content);
+            m_CurrentLevel = new LevelOne(Content);
         }
 
         protected override void Initialize()
@@ -88,28 +88,28 @@ namespace LD48
                 if (m_CurrentLevel.IsLevelOver) {
                     switch (m_CurrentLevel.LevelId) {
                         case 1:
-                            m_CurrentLevel = new SecondLevel(Content);
+                            m_CurrentLevel = new LevelTwo(Content);
                             break;
                         case 2:
-                            m_CurrentLevel = new ThirdLevel(Content);
+                            m_CurrentLevel = new LevelThree(Content);
                             break;
                         case 3:
-                            m_CurrentLevel = new FourthLevel(Content);
+                            m_CurrentLevel = new LevelFour(Content);
                             break;
                         case 4:
-                            m_CurrentLevel = new FifthLevel(Content);
+                            m_CurrentLevel = new LevelFive(Content);
                             break;
                         case 5:
-                            m_CurrentLevel = new SixthLevel(Content);
+                            m_CurrentLevel = new LevelSix(Content);
                             break;
                         case 6:
-                            m_CurrentLevel = new SeventhLevel(Content);
+                            m_CurrentLevel = new LevelSeven(Content);
                             break;
                         case 7:
                             m_CurrentLevel = new Epilogue(Content);
                             break;
                         case 8:
-                            m_CurrentLevel = new FirstLevel(Content);
+                            m_CurrentLevel = new LevelOne(Content);
                             m_TitleScreen.IsClosed = false;
                             break;
                     }

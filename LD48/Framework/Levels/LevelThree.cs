@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using LD48.Content;
 using LD48.Dialogue;
 using LD48.Framework.Input;
@@ -10,27 +9,25 @@ using MonoGame.Extended.Sprites;
 
 namespace LD48.Framework.Levels
 {
-    public class SixthLevel : Level
+    public class LevelThree : Level
     {
         /// <summary>
         /// Constructs a new level.
         /// </summary>
-        public SixthLevel(ContentManager p_Content) : base(p_Content, 6)
+        public LevelThree(ContentManager p_Content) : base(p_Content, 3, "Seeing Double")
         {
             NumberBank = new List<char> {
-                '1',
-                '1',
                 '2',
-                '3',
+                '2',
                 '4',
-                '5',
+                '4',
+                '6',
                 '6',
                 '8',
-                '9',
-                '9'
+                '8'
             };
-            GoalValue = 13;
-            LevelPar = 6;
+            GoalValue = 9;
+            LevelPar = 3;
         }
 
         public override void Initialize(GameWindow p_Window,
@@ -57,13 +54,6 @@ namespace LD48.Framework.Levels
             base.Draw(p_GameTime, p_SpriteBatch);
 
             p_SpriteBatch.End();
-        }
-
-        protected override bool IsEquationValid()
-        {
-            bool noMinus = TextBox.Text.String.Count(x => x == '-') == 0;
-
-            return base.IsEquationValid() && noMinus;
         }
     }
 }

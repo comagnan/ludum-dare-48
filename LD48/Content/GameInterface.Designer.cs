@@ -106,7 +106,7 @@ namespace LD48.Content {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to LUDUM DARE 48.
+        ///   Looks up a localized string similar to FORE!.
         /// </summary>
         internal static string GameTitle {
             get {

@@ -10,27 +10,27 @@ using MonoGame.Extended.Sprites;
 
 namespace LD48.Framework.Levels
 {
-    public class FourthLevel : Level
+    public class LevelSix : Level
     {
         /// <summary>
         /// Constructs a new level.
         /// </summary>
-        public FourthLevel(ContentManager p_Content) : base(p_Content, 4)
+        public LevelSix(ContentManager p_Content) : base(p_Content, 6, "No Going Back")
         {
             NumberBank = new List<char> {
                 '1',
+                '1',
                 '2',
                 '3',
-                '3',
-                '4',
-                '4',
-                '4',
                 '4',
                 '5',
-                '5'
+                '6',
+                '8',
+                '9',
+                '9'
             };
-            GoalValue = 27;
-            LevelPar = 3;
+            GoalValue = 13;
+            LevelPar = 6;
         }
 
         public override void Initialize(GameWindow p_Window,
@@ -61,9 +61,12 @@ namespace LD48.Framework.Levels
 
         protected override bool IsEquationValid()
         {
-            bool allSevens = TextBox.Text.String.Count(x => x == '/' || x == '*' || x == '-' || x == '+') <= 5;
+            bool noMinus = TextBox.Text.String.Count(x => x == '-') == 0;
+            if (noMinus) {
+                throw new PuzzleUnsolvedException("Nope! You can't use subtraction in this one.");
+            }
 
-            return base.IsEquationValid() && allSevens;
+            return base.IsEquationValid() && noMinus;
         }
     }
 }

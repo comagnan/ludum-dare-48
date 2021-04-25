@@ -10,31 +10,27 @@ using MonoGame.Extended.Sprites;
 
 namespace LD48.Framework.Levels
 {
-    public class SeventhLevel : Level
+    public class LevelFour : Level
     {
         /// <summary>
         /// Constructs a new level.
         /// </summary>
-        public SeventhLevel(ContentManager p_Content) : base(p_Content, 7)
+        public LevelFour(ContentManager p_Content) : base(p_Content, 4, "Too Much of a Good Thing")
         {
             NumberBank = new List<char> {
                 '1',
                 '2',
-                '2',
                 '3',
                 '3',
                 '4',
+                '4',
+                '4',
+                '4',
                 '5',
-                '6',
-                '7',
-                '7',
-                '7',
-                '8',
-                '9',
-                '9'
+                '5'
             };
-            GoalValue = 17;
-            LevelPar = 5;
+            GoalValue = 27;
+            LevelPar = 3;
         }
 
         public override void Initialize(GameWindow p_Window,
@@ -65,9 +61,13 @@ namespace LD48.Framework.Levels
 
         protected override bool IsEquationValid()
         {
-            bool allSevens = TextBox.Text.String.Count(x => x == '7') == 3;
+            bool operationLimitRespected = TextBox.Text.String.Count(x => x == '/' || x == '*' || x == '-' || x == '+') <= 5;
 
-            return base.IsEquationValid() && allSevens;
+            if (!operationLimitRespected) {
+                throw new PuzzleUnsolvedException("Bzzt! You've used too many operations! You need to stick to 5 or less.");
+            }
+
+            return base.IsEquationValid() && operationLimitRespected;
         }
     }
 }

@@ -10,7 +10,7 @@ namespace LD48.UserInterface
 {
     public class TitleScreen : IUserInterface
     {
-        private const int ITEM_DISTANCE = 70;
+        private const int ITEM_DISTANCE = 120;
         private const int MAXIMUM_POINTER = 3;
         private readonly Texture2D m_TitleScreenArt;
         private readonly Texture2D m_SelectionBubble;
@@ -19,6 +19,7 @@ namespace LD48.UserInterface
         private readonly Song m_TitleScreenSong;
 
         // Graphics
+        private Texture2D m_ButtonTexture;
         private TimeSpan m_TimeSinceButtonPress;
 
         private int m_CurrentPointer;
@@ -39,6 +40,7 @@ namespace LD48.UserInterface
             m_SelectionBubble = p_Content.Load<Texture2D>("Interface/selection");
             m_Font = p_Content.Load<SpriteFont>("Dialogue");
             m_TitleScreenSong = p_Content.Load<Song>("SFX/betterdays_todelete");
+            m_ButtonTexture = p_Content.Load<Texture2D>("Interface/button");
             MediaPlayer.Play(m_TitleScreenSong);
             MediaPlayer.IsRepeating = true;
 
@@ -122,42 +124,79 @@ namespace LD48.UserInterface
                     1f);
             } else {
                 if (ShowOptions) {
-                    p_SpriteBatch.Draw(m_SelectionBubble,
-                        new Rectangle(521, 308 + ITEM_DISTANCE * m_CurrentPointer, 240, 50),
-                        Color.White * (0.2f + 0.05f * (float) Math.Cos(p_Time.TotalGameTime.TotalSeconds * 4.0)));
+                    p_SpriteBatch.Draw(m_ButtonTexture,
+                        new Vector2(960, 600),
+                        new Rectangle(0, 0, 610, 114),
+                        m_CurrentPointer == 0 ? Color.Gray : Color.White,
+                        0f,
+                        new Vector2(305, 57),
+                        1f,
+                        SpriteEffects.None,
+                        1f);
+                    p_SpriteBatch.Draw(m_ButtonTexture,
+                        new Vector2(960, 600 + ITEM_DISTANCE),
+                        new Rectangle(0, 0, 610, 114),
+                        m_CurrentPointer == 1 ? Color.Gray : Color.White,
+                        0f,
+                        new Vector2(305, 57),
+                        1f,
+                        SpriteEffects.None,
+                        1f);
+                    p_SpriteBatch.Draw(m_ButtonTexture,
+                        new Vector2(960, 600 + 2 * ITEM_DISTANCE),
+                        new Rectangle(0, 0, 610, 114),
+                        m_CurrentPointer == 2 ? Color.Gray : Color.White,
+                        0f,
+                        new Vector2(305, 57),
+                        1f,
+                        SpriteEffects.None,
+                        1f);
+                    p_SpriteBatch.Draw(m_ButtonTexture,
+                        new Vector2(960, 600 + 3 * ITEM_DISTANCE),
+                        new Rectangle(0, 0, 610, 114),
+                        m_CurrentPointer == 3 ? Color.Gray : Color.White,
+                        0f,
+                        new Vector2(305, 57),
+                        1f,
+                        SpriteEffects.None,
+                        1f);
+                    //Console.WriteLine($"START: {m_Font.MeasureString(GameInterface.GameTitle)}");
                     p_SpriteBatch.DrawString(m_Font,
                         GameInterface.Start,
-                        new Vector2(594, 297),
+                        new Vector2(976, 600),
                         Color.White,
                         0f,
-                        Vector2.Zero,
+                        new Vector2(62, 31),
                         1f,
                         SpriteEffects.None,
                         1f);
+                    //Console.WriteLine($"HOW TO PLAY: {m_Font.MeasureString(GameInterface.HowToPlay)}");
                     p_SpriteBatch.DrawString(m_Font,
                         GameInterface.HowToPlay,
-                        new Vector2(530, 297 + ITEM_DISTANCE),
+                        new Vector2(960, 600 + ITEM_DISTANCE),
                         Color.White,
                         0f,
-                        Vector2.Zero,
+                        new Vector2(110, 31),
                         1f,
                         SpriteEffects.None,
                         1f);
+                    //Console.WriteLine($"CREDITS: {m_Font.MeasureString(GameInterface.Credits)}");
                     p_SpriteBatch.DrawString(m_Font,
                         GameInterface.Credits,
-                        new Vector2(574, 297 + 2 * ITEM_DISTANCE),
+                        new Vector2(960, 600 + 2 * ITEM_DISTANCE),
                         Color.White,
                         0f,
-                        Vector2.Zero,
+                        new Vector2(66, 31),
                         1f,
                         SpriteEffects.None,
                         1f);
+                    //Console.WriteLine($"EXIT: {m_Font.MeasureString(GameInterface.Quit)}");
                     p_SpriteBatch.DrawString(m_Font,
                         GameInterface.Quit,
-                        new Vector2(599, 297 + 3 * ITEM_DISTANCE),
+                        new Vector2(960, 600 + 3 * ITEM_DISTANCE),
                         Color.White,
                         0f,
-                        Vector2.Zero,
+                        new Vector2(41, 31),
                         1f,
                         SpriteEffects.None,
                         1f);

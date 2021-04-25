@@ -9,25 +9,29 @@ using MonoGame.Extended.Sprites;
 
 namespace LD48.Framework.Levels
 {
-    public class ThirdLevel : Level
+    public class LevelOne : Level
     {
         /// <summary>
         /// Constructs a new level.
         /// </summary>
-        public ThirdLevel(ContentManager p_Content) : base(p_Content, 3)
+        public LevelOne(ContentManager p_Content) : base(p_Content, 1, "Humble Beginnings")
         {
             NumberBank = new List<char> {
+                '0',
+                '1',
                 '2',
-                '2',
+                '3',
                 '4',
-                '4',
+                '5',
                 '6',
-                '6',
+                '7',
                 '8',
-                '8'
+                '9'
             };
-            GoalValue = 9;
-            LevelPar = 3;
+            DialogueBox.AddText(new DialogueEntry {
+                Text = "Welcome to Galaxia!",
+                Sprite = GameInterface.Beatrice
+            });
         }
 
         public override void Initialize(GameWindow p_Window,

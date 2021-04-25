@@ -1,37 +1,37 @@
 ﻿using System.Collections.Generic;
-using LD48.Content;
-using LD48.Dialogue;
+using System.Linq;
 using LD48.Framework.Input;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using MonoGame.Extended.Sprites;
 
 namespace LD48.Framework.Levels
 {
-    public class FirstLevel : Level
+    public class LevelSeven : Level
     {
         /// <summary>
         /// Constructs a new level.
         /// </summary>
-        public FirstLevel(ContentManager p_Content) : base(p_Content, 1)
+        public LevelSeven(ContentManager p_Content) : base(p_Content, 7, "Lady Luck")
         {
             NumberBank = new List<char> {
-                '0',
                 '1',
                 '2',
+                '2',
+                '3',
                 '3',
                 '4',
                 '5',
                 '6',
                 '7',
+                '7',
+                '7',
                 '8',
+                '9',
                 '9'
             };
-            DialogueBox.AddText(new DialogueEntry {
-                Text = "Welcome to Galaxia!",
-                Sprite = GameInterface.Beatrice
-            });
+            GoalValue = 17;
+            LevelPar = 5;
         }
 
         public override void Initialize(GameWindow p_Window,
@@ -58,6 +58,17 @@ namespace LD48.Framework.Levels
             base.Draw(p_GameTime, p_SpriteBatch);
 
             p_SpriteBatch.End();
+        }
+
+        protected override bool IsEquationValid()
+        {
+            bool allSevens = TextBox.Text.String.Count(x => x == '7') == 3;
+
+            if (!allSevens) {
+                throw new PuzzleUnsolvedException("There's... You don't have the right number of sevens in there.");
+            }
+
+            return base.IsEquationValid() && allSevens;
         }
     }
 }
