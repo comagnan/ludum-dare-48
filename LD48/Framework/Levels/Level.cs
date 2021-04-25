@@ -33,6 +33,7 @@ namespace LD48.Framework.Levels
         protected Texture2D Rectangle;
         protected Texture2D Background;
         protected Texture2D Mascot;
+        protected Texture2D Rule;
         protected Box TextBox;
 
         protected SpriteFont EquationFont;
@@ -75,6 +76,7 @@ namespace LD48.Framework.Levels
             Background = Content.Load<Texture2D>("Interface/stage");
             Mascot = Content.Load<Texture2D>("Interface/mascot");
             EquationFont = Content.Load<SpriteFont>("Title");
+            Rule = Content.Load<Texture2D>("Interface/rule");
 
             SoundEffect keyPressEffect = Content.Load<SoundEffect>("SFX/add");
             SoundEffect removeEffect = Content.Load<SoundEffect>("SFX/delete");
@@ -183,6 +185,19 @@ namespace LD48.Framework.Levels
                 SpriteEffects.None,
                 1f);
             RenderBank(p_SpriteBatch, EquationFont);
+            if (!string.IsNullOrEmpty(LevelWarning)) {
+                p_SpriteBatch.Draw(Rule, new Vector2(500, 850), new Rectangle(0, 0, 735, 172), Color.White);
+                p_SpriteBatch.DrawString(p_SpriteFont,
+                    LevelWarning,
+                    new Vector2(870, 950),
+                    Color.Black,
+                    0f,
+                    p_SpriteFont.MeasureString(LevelWarning)/2,
+                    0.75f,
+                    SpriteEffects.None,
+                    1f);
+            }
+
             DialogueBox.Draw(p_GameTime, p_SpriteBatch);
         }
 

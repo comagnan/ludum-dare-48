@@ -31,6 +31,7 @@ namespace LD48.Framework.Levels
             };
             GoalValue = 13;
             LevelPar = 6;
+            LevelWarning = "\"-\" is forbidden!";
         }
 
         public override void Initialize(GameWindow p_Window,
@@ -62,7 +63,7 @@ namespace LD48.Framework.Levels
         protected override bool IsEquationValid()
         {
             bool noMinus = TextBox.Text.String.Count(x => x == '-') == 0;
-            if (noMinus) {
+            if (!noMinus) {
                 throw new PuzzleUnsolvedException("Nope! You can't use subtraction in this one.");
             }
 

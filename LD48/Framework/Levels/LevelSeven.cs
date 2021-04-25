@@ -32,6 +32,7 @@ namespace LD48.Framework.Levels
             };
             GoalValue = 17;
             LevelPar = 5;
+            LevelWarning = "You must use all sevens!";
         }
 
         public override void Initialize(GameWindow p_Window,

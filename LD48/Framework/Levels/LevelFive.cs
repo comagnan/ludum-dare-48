@@ -30,6 +30,7 @@ namespace LD48.Framework.Levels
             };
             GoalValue = 156;
             LevelPar = 4;
+            LevelWarning = "Only use numbers with 2+ digits!";
         }
 
         public override void Initialize(GameWindow p_Window,

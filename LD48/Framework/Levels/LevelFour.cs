@@ -31,6 +31,7 @@ namespace LD48.Framework.Levels
             };
             GoalValue = 27;
             LevelPar = 3;
+            LevelWarning = "Use at most five operators!";
         }
 
         public override void Initialize(GameWindow p_Window,
@@ -64,7 +65,7 @@ namespace LD48.Framework.Levels
             bool operationLimitRespected = TextBox.Text.String.Count(x => x == '/' || x == '*' || x == '-' || x == '+') <= 5;
 
             if (!operationLimitRespected) {
-                throw new PuzzleUnsolvedException("Bzzt! You've used too many operations! You need to stick to 5 or less.");
+                throw new PuzzleUnsolvedException("Bzzt! You've used too many operators! You need to stick to 5 or less.");
             }
 
             return base.IsEquationValid() && operationLimitRespected;
