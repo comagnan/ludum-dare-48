@@ -89,13 +89,6 @@ namespace LD48.Framework.TextBox
             KeyboardInput.Dispose();
         }
 
-        public void Clear()
-        {
-            Text.RemoveCharacters(0, Text.Length);
-            Cursor.TextCursor = 0;
-            Cursor.SelectedChar = null;
-        }
-
         public void Update()
         {
             Renderer.Update();

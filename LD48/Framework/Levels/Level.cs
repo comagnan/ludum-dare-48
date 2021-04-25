@@ -27,7 +27,6 @@ namespace LD48.Framework.Levels
         protected int LevelPar;
         protected string LevelName;
         protected string LevelWarning;
-        public readonly int LevelId;
 
         // GET CUSTOM OBJECT FOR THIS EVENTUALLY
         protected GraphicsDevice GraphicsDevice;
@@ -40,6 +39,7 @@ namespace LD48.Framework.Levels
 
         // Level content.        
         protected ContentManager Content { get; }
+        public readonly int LevelId;
 
         public bool IsLevelOver { get; protected set; }
 
@@ -56,6 +56,7 @@ namespace LD48.Framework.Levels
             m_Table = new DataTable();
             NumberBank = new List<char>();
             IsLevelOver = false;
+            LevelName = p_LevelName;
         }
 
         public void Dispose()
@@ -77,12 +78,12 @@ namespace LD48.Framework.Levels
 
             SoundEffect keyPressEffect = Content.Load<SoundEffect>("SFX/add");
             SoundEffect removeEffect = Content.Load<SoundEffect>("SFX/delete");
-            TextBox = new Box(new Rectangle(80, 240, 920, 530),
-                100,
+            TextBox = new Box(new Rectangle(260, 210, 860, 300),
+                86,
                 "",
                 GraphicsDevice,
                 EquationFont,
-                Color.Black,
+                Color.White,
                 Color.Aqua * 0.25f,
                 30,
                 keyPressEffect,
@@ -106,24 +107,24 @@ namespace LD48.Framework.Levels
                             });
                         }
                     } catch (PuzzleUnsolvedException e) {
-                        DialogueBox.AddText(new DialogueEntry {
-                            Text = e.Message
-                        });
+                        DialogueBox.AddText(new DialogueEntry { Text = e.Message });
                     }
                 }
             }
+
             DialogueBox.Update(p_GameTime, p_InputController);
         }
 
         public virtual void Draw(GameTime p_GameTime,
                                  SpriteBatch p_SpriteBatch)
         {
+            p_SpriteBatch.Draw(Rectangle, new Rectangle(0, 0, 1920, 1080), Color.LightGreen);
             p_SpriteBatch.Draw(Background, new Rectangle(0, 0, 1920, 1080), Color.White);
             p_SpriteBatch.Draw(Mascot,
                 new Vector2(1645, 750),
                 new Rectangle(0, 0, 500, 600),
                 Color.White,
-                (float) Math.Sin(p_GameTime.TotalGameTime.TotalSeconds/2f) / 8f,
+                (float) Math.Sin(p_GameTime.TotalGameTime.TotalSeconds / 2f) / 8f,
                 new Vector2(250, 300),
                 1f,
                 SpriteEffects.None,
@@ -135,35 +136,50 @@ namespace LD48.Framework.Levels
                                   SpriteBatch p_SpriteBatch,
                                   SpriteFont p_SpriteFont)
         {
-            p_SpriteBatch.DrawString(p_SpriteFont, LevelId.ToString(), new Vector2(180, 950), Color.Black);
-            p_SpriteBatch.DrawString(p_SpriteFont, $"{GoalValue}", new Vector2(650, 950), Color.Black, 0f, Vector2.Zero, 1f, SpriteEffects.None, 1f);
             p_SpriteBatch.DrawString(p_SpriteFont,
-                $"{GetCurrentResult() ?? "?"}",
-                new Vector2(1100, 950),
+                $"{GoalValue}",
+                new Vector2(1720, 150),
                 Color.Black,
                 0f,
-                Vector2.Zero,
-                1f,
+                p_SpriteFont.MeasureString(GoalValue.ToString()) / 2,
+                2f,
                 SpriteEffects.None,
                 1f);
-            p_SpriteBatch.DrawString(p_SpriteFont, "My super smart equation!", new Vector2(180, 80), Color.Black);
-            p_SpriteBatch.DrawString(p_SpriteFont, "Bank", new Vector2(1120, 80), Color.Black);
             p_SpriteBatch.DrawString(p_SpriteFont,
-                $"PAR: {LevelPar}",
-                new Vector2(1420, 150),
+                $"{GetCurrentResult() ?? "?"}",
+                new Vector2(1720, 400),
                 Color.Black,
                 0f,
-                Vector2.Zero,
+                p_SpriteFont.MeasureString(GetCurrentResult()) / 2,
+                1.75f,
+                SpriteEffects.None,
+                1f);
+            p_SpriteBatch.DrawString(p_SpriteFont,
+                LevelName,
+                new Vector2(650, 85),
+                Color.White,
+                0f,
+                p_SpriteFont.MeasureString(LevelName) * 3 / 8,
                 0.75f,
                 SpriteEffects.None,
                 1f);
+            p_SpriteBatch.DrawString(p_SpriteFont, "Bank", new Vector2(650, 810), Color.Black, 0f, new Vector2(5, 50), 0.75f, SpriteEffects.None, 1f);
             p_SpriteBatch.DrawString(p_SpriteFont,
-                $"CURRENT SCORE: {GetScore()}",
-                new Vector2(1420, 270),
-                Color.Black,
+                $"{LevelPar}",
+                new Vector2(190, 920),
+                Color.White,
                 0f,
-                Vector2.Zero,
-                0.7f,
+                p_SpriteFont.MeasureString(LevelPar.ToString()) / 2,
+                2f,
+                SpriteEffects.None,
+                1f);
+            p_SpriteBatch.DrawString(p_SpriteFont,
+                $"{GetScore()}",
+                new Vector2(335, 920),
+                Color.White,
+                0f,
+                p_SpriteFont.MeasureString(GetScore().ToString()) / 2,
+                2f,
                 SpriteEffects.None,
                 1f);
             RenderBank(p_SpriteBatch, EquationFont);
@@ -186,7 +202,7 @@ namespace LD48.Framework.Levels
 
         protected int GetScore()
         {
-            return TextBox.Text.String.Count(char.IsDigit) - LevelPar;
+            return TextBox.Text.String.Count(char.IsDigit);
         }
 
         protected virtual bool IsEquationValid()
@@ -195,17 +211,16 @@ namespace LD48.Framework.Levels
             if (!correctValue) {
                 throw new PuzzleUnsolvedException($"Wrong! We're looking for an equation that equals {GoalValue}.");
             }
-            
-            
-            bool scorePositive = GetScore() >= 0;
+
+
+            bool scorePositive = GetScore() >= LevelPar;
             if (!scorePositive) {
                 throw new PuzzleUnsolvedException("Your equation is BORING! You have to go deeper!");
             }
 
             bool respectsBank = true;
             List<char> bankCopy = NumberBank.ToList();
-            foreach (char character in TextBox.Text.Characters)
-            {
+            foreach (char character in TextBox.Text.Characters) {
                 if (char.IsDigit(character)) {
                     if (bankCopy.Contains(character)) {
                         bankCopy.Remove(character);
@@ -226,9 +241,9 @@ namespace LD48.Framework.Levels
                                 SpriteFont p_SpriteFont)
         {
             for (int i = 0; i < NumberBank.Count; i++) {
-                int column = i % 3;
+                int column = i % 10;
                 int row = (i - column) / 3;
-                p_SpriteBatch.DrawString(p_SpriteFont, NumberBank[i].ToString(), new Vector2(1080 + 100 * column, 200 + 100 * row), Color.Black);
+                p_SpriteBatch.DrawString(p_SpriteFont, NumberBank[i].ToString(), new Vector2(200 + 100 * column, 550 + 50 * row), Color.Black);
             }
         }
     }
