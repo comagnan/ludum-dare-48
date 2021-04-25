@@ -25,7 +25,7 @@ namespace LD48.Framework.Levels
         protected List<char> NumberBank;
         protected int GoalValue;
         protected int LevelPar;
-        protected int LevelId;
+        public readonly int LevelId;
 
         // GET CUSTOM OBJECT FOR THIS EVENTUALLY
         protected GraphicsDevice GraphicsDevice;
@@ -40,7 +40,6 @@ namespace LD48.Framework.Levels
         protected ContentManager Content { get; }
 
         public bool IsLevelOver { get; protected set; }
-        public Level NextLevel { get; protected set; }
 
         public Level(ContentManager p_Content,
                      int p_LevelId)
@@ -115,7 +114,7 @@ namespace LD48.Framework.Levels
                 new Vector2(1645, 750),
                 new Rectangle(0, 0, 500, 600),
                 Color.White,
-                (float) Math.Sin(p_GameTime.TotalGameTime.TotalSeconds) / 4f,
+                (float) Math.Sin(p_GameTime.TotalGameTime.TotalSeconds/2f) / 8f,
                 new Vector2(250, 300),
                 1f,
                 SpriteEffects.None,

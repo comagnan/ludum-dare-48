@@ -121,17 +121,6 @@ namespace LD48.UserInterface
                     SpriteEffects.None,
                     1f);
             } else {
-                p_SpriteBatch.DrawString(m_Font,
-                    GameInterface.GameTitle,
-                    new Vector2(302, 100),
-                    Color.White,
-                    0f,
-                    Vector2.Zero,
-                    2f,
-                    SpriteEffects.None,
-                    1f);
-
-
                 if (ShowOptions) {
                     p_SpriteBatch.Draw(m_SelectionBubble,
                         new Rectangle(521, 308 + ITEM_DISTANCE * m_CurrentPointer, 240, 50),
@@ -175,8 +164,8 @@ namespace LD48.UserInterface
                 } else {
                     p_SpriteBatch.DrawString(m_Font,
                         GameInterface.PressAButton,
-                        new Vector2(570, 600),
-                        Color.White * (float) Math.Abs(Math.Cos(p_Time.TotalGameTime.TotalSeconds)),
+                        new Vector2(890, 900),
+                        Color.Black * (float) Math.Abs(Math.Cos(p_Time.TotalGameTime.TotalSeconds)),
                         0f,
                         Vector2.Zero,
                         1f,

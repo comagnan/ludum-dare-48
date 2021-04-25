@@ -187,6 +187,7 @@ namespace LD48.Dialogue
                         m_CurrentText.RemoveAt(i - 1);
                     }
                 } else {
+                    m_DialogueBuffer[0].Callback?.Invoke();
                     m_DialogueBuffer.RemoveAt(0);
                     m_CurrentText = GetBufferSize() > 0 ? WrapText(m_DialogueBuffer[0].Text) : new List<string>();
                 }
