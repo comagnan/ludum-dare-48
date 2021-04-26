@@ -30,7 +30,23 @@ namespace LD48.Framework.Levels
             GoalValue = 9;
             LevelPar = 3;
             DialogueBox.AddText(new DialogueEntry {
-                Text = "Welcome to Fore!",
+                Text = "For this one, I'm only giving you even numbers to reach a whole number.",
+                Speaker = GameInterface.Claire
+            });
+            DialogueBox.AddText(new DialogueEntry {
+                Text = "Anything's possible in Fore!",
+                Speaker = GameInterface.Claire
+            });
+            DialogueBox.AddText(new DialogueEntry {
+                Text = "But once you start thinking of numbers as a relation of other numbers, it can kinda start feeling like you're on shifting sands, haha.",
+                Speaker = GameInterface.Claire
+            });
+            DialogueBox.AddText(new DialogueEntry {
+                Text = "Like, layers and layers of stuff, moving around, with no clear shape.",
+                Speaker = GameInterface.Claire
+            });
+            DialogueBox.AddText(new DialogueEntry {
+                Text = "If you're feeling overwhelmed, feel free to pause and take a little break.",
                 Speaker = GameInterface.Claire,
                 Callback = () => PlaySong(false)
             });

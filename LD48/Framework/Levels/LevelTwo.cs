@@ -30,7 +30,15 @@ namespace LD48.Framework.Levels
             GoalValue = 0;
             LevelPar = 4;
             DialogueBox.AddText(new DialogueEntry {
-                Text = "Welcome to Fore!",
+                Text = "See? I told you you were going to be a natural.",
+                Speaker = GameInterface.Claire
+            });
+            DialogueBox.AddText(new DialogueEntry {
+                Text = "The goal's not always going to be 9, of course.",
+                Speaker = GameInterface.Claire
+            });
+            DialogueBox.AddText(new DialogueEntry {
+                Text = "For this one, make something complicated that amounts to nothing!",
                 Speaker = GameInterface.Claire,
                 Callback = () => PlaySong(false)
             });

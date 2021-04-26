@@ -38,7 +38,15 @@ namespace LD48.Framework.Levels
             LevelZenPar = 8;
             LevelWarning = "You must use all sevens!";
             DialogueBox.AddText(new DialogueEntry {
-                Text = "Welcome to Fore!",
+                Text = "BWAHAHAHA! TREMBLE, MORTALS, FOR AN ANCIENT EVIL HAS AWOKEN. ME!",
+                Speaker = "Evil McBad"
+            });
+            DialogueBox.AddText(new DialogueEntry {
+                Text = "AND I WILL RULE THE WORLD, UNLESS HUMANITY PROVES THEIR WORTH AT MEANINGLESS BRAIN TEASERS!",
+                Speaker = "Evil McBad"
+            });
+            DialogueBox.AddText(new DialogueEntry {
+                Text = "How convenient!",
                 Speaker = GameInterface.Claire,
                 Callback = () => PlaySong(true)
             });
@@ -74,6 +82,20 @@ namespace LD48.Framework.Levels
             }
 
             return base.IsEquationValid() && allSevens;
+        }
+
+        protected override void FinishLevel()
+        {
+            StopSong();
+            DialogueBox.AddText(new DialogueEntry {
+                Text = "NOOOOOOOOOOOOOOOOOOOOOOO! FOILED AGAIN!",
+                Speaker = "Evil McBad"
+            });
+            DialogueBox.AddText(new DialogueEntry {
+                Text = "Wow, you did it! You're a hero!",
+                Speaker = GameInterface.Claire,
+                Callback = () => IsLevelOver = true
+            });
         }
     }
 }

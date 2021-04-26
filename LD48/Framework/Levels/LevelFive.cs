@@ -33,7 +33,27 @@ namespace LD48.Framework.Levels
             LevelPar = 4;
             LevelWarning = "Only use numbers with 2+ digits!";
             DialogueBox.AddText(new DialogueEntry {
-                Text = "Welcome to Fore!",
+                Text = "Good job on the last one! But they're only getting tougher from now on.",
+                Speaker = GameInterface.Claire
+            });
+            DialogueBox.AddText(new DialogueEntry {
+                Text = "If you haven't started using numbers with multiple digits before this hole, this might be on the tricky side.",
+                Speaker = GameInterface.Claire
+            });
+            DialogueBox.AddText(new DialogueEntry {
+                Text = "You know what? Let me tell you the strategy I use.",
+                Speaker = GameInterface.Claire
+            });
+            DialogueBox.AddText(new DialogueEntry {
+                Text = "I often go in reverse from the goal. If it's a big number, I first find what its factors are.",
+                Speaker = GameInterface.Claire
+            });
+            DialogueBox.AddText(new DialogueEntry {
+                Text = "Because if I can find a way to get to them, I'm already there!",
+                Speaker = GameInterface.Claire
+            });
+            DialogueBox.AddText(new DialogueEntry {
+                Text = "Not that you have to do it this way, of course. Good luck!",
                 Speaker = GameInterface.Claire,
                 Callback = () => PlaySong(false)
             });

@@ -19,6 +19,9 @@ namespace LD48.Framework.Levels
     {
         private DataTable m_Table;
 
+        private Song m_LevelSong;
+        private Song m_BossSong;
+
         protected readonly DialogueBox DialogueBox;
 
         // The puzzling happens here:
@@ -33,15 +36,15 @@ namespace LD48.Framework.Levels
         protected GraphicsDevice GraphicsDevice;
         protected Texture2D Rectangle;
         protected Texture2D Background;
+        protected Texture2D DaytimeWindow;
+        protected Texture2D DuskWindow;
+        protected Texture2D NightWindow;
         protected Texture2D Rule;
 
         protected Texture2D ClaireDefault;
         protected Texture2D ClaireZen;
         protected Texture2D ClaireAngery;
         protected Texture2D ClaireAngeriest;
-
-        private Song m_LevelSong;
-        private Song m_BossSong;
 
         protected SpriteFont EquationFont;
 
@@ -68,7 +71,6 @@ namespace LD48.Framework.Levels
             IsLevelOver = false;
             LevelName = p_LevelName;
             LevelRemainingTime = TimeSpan.FromMinutes(4);
-            //LevelRemainingTime = TimeSpan.FromSeconds(5);
         }
 
         public void Dispose()
@@ -78,7 +80,7 @@ namespace LD48.Framework.Levels
 
         // Must be called after initializing inheritors.
         public void Initialize(GameWindow p_Window,
-                                       GraphicsDevice p_GraphicsDevice)
+                               GraphicsDevice p_GraphicsDevice)
         {
             GraphicsDevice = p_GraphicsDevice;
             Rectangle = new Texture2D(GraphicsDevice, 1, 1);
@@ -91,6 +93,9 @@ namespace LD48.Framework.Levels
             ClaireAngeriest = Content.Load<Texture2D>("Interface/claire_further_beyond");
             EquationFont = Content.Load<SpriteFont>("Title");
             Rule = Content.Load<Texture2D>("Interface/rule");
+            DaytimeWindow = Content.Load<Texture2D>("Interface/day_background");
+            DuskWindow = Content.Load<Texture2D>("Interface/dusk_background");
+            NightWindow = Content.Load<Texture2D>("Interface/night_background");
 
             m_LevelSong = Content.Load<Song>("SFX/stage_1");
             m_BossSong = Content.Load<Song>("SFX/stage_2");
@@ -98,7 +103,7 @@ namespace LD48.Framework.Levels
             SoundEffect keyPressEffect = Content.Load<SoundEffect>("SFX/add");
             SoundEffect removeEffect = Content.Load<SoundEffect>("SFX/delete");
             TextBox = new Box(new Rectangle(260, 210, 860, 300),
-                75,
+                70,
                 "",
                 GraphicsDevice,
                 EquationFont,
@@ -124,7 +129,7 @@ namespace LD48.Framework.Levels
                         LevelRemainingTime = TimeSpan.Zero;
                     }
                 }
-                
+
                 TextBox.Active = true;
                 TextBox.Update();
 
@@ -230,6 +235,7 @@ namespace LD48.Framework.Levels
                     1f);
             }
 
+            DrawWindow(p_SpriteBatch);
             DrawClaire(p_GameTime, p_SpriteBatch);
             DialogueBox.Draw(p_GameTime, p_SpriteBatch);
         }
@@ -258,11 +264,6 @@ namespace LD48.Framework.Levels
             }
         }
 
-        protected int GetScore()
-        {
-            return TextBox.Text.String.Count(char.IsDigit);
-        }
-
         protected virtual bool IsEquationValid()
         {
             bool correctValue = GoalValue.ToString() == GetCurrentResult();
@@ -277,7 +278,7 @@ namespace LD48.Framework.Levels
             }
 
             bool respectsBank = true;
-            List<char> bankCopy = new ();
+            List<char> bankCopy = new();
             bankCopy.AddRange(NumberBank);
             foreach (char character in TextBox.Text.String) {
                 if (char.IsDigit(character)) {
@@ -301,7 +302,7 @@ namespace LD48.Framework.Levels
         {
             if (LevelRemainingTime == TimeSpan.Zero) {
                 p_SpriteBatch.Draw(ClaireAngeriest,
-                    new Vector2(1645, 750 + 2 * (float) Math.Sin(100 * p_GameTime.TotalGameTime.TotalSeconds)),
+                    new Vector2(1625, 750 + 2 * (float) Math.Sin(100 * p_GameTime.TotalGameTime.TotalSeconds)),
                     new Rectangle(0, 0, 500, 600),
                     Color.White,
                     0f,
@@ -311,7 +312,7 @@ namespace LD48.Framework.Levels
                     1f);
             } else if (LevelRemainingTime < TimeSpan.FromMinutes(1)) {
                 p_SpriteBatch.Draw(ClaireAngery,
-                    new Vector2(1645, 750 + 2 * (float) Math.Sin(50 * p_GameTime.TotalGameTime.TotalSeconds)),
+                    new Vector2(1625, 750 + 2 * (float) Math.Sin(50 * p_GameTime.TotalGameTime.TotalSeconds)),
                     new Rectangle(0, 0, 500, 600),
                     Color.White,
                     0f,
@@ -321,7 +322,7 @@ namespace LD48.Framework.Levels
                     1f);
             } else if (GetScore() >= LevelZenPar) {
                 p_SpriteBatch.Draw(ClaireZen,
-                    new Vector2(1645, 750 + 20 * (float) Math.Sin(p_GameTime.TotalGameTime.TotalSeconds / 2f)),
+                    new Vector2(1625, 750 + 20 * (float) Math.Sin(p_GameTime.TotalGameTime.TotalSeconds / 2f)),
                     new Rectangle(0, 0, 500, 600),
                     Color.White,
                     (float) Math.Sin(p_GameTime.TotalGameTime.TotalSeconds / 8f) / 16f,
@@ -331,7 +332,7 @@ namespace LD48.Framework.Levels
                     1f);
             } else {
                 p_SpriteBatch.Draw(ClaireDefault,
-                    new Vector2(1645, 750),
+                    new Vector2(1625, 750),
                     new Rectangle(0, 0, 500, 600),
                     Color.White,
                     0f,
@@ -352,6 +353,51 @@ namespace LD48.Framework.Levels
         protected void StopSong()
         {
             MediaPlayer.Stop();
+        }
+
+        private int GetScore()
+        {
+            return TextBox.Text.String.Count(char.IsDigit);
+        }
+
+        private void DrawWindow(SpriteBatch p_SpriteBatch)
+        {
+            switch (LevelId) {
+                case 5:
+                case 6:
+                    p_SpriteBatch.Draw(DuskWindow,
+                        new Vector2(1600, 770),
+                        new Rectangle(0, 0, 500, 500),
+                        Color.White,
+                        0f,
+                        new Vector2(250, 250),
+                        1f,
+                        SpriteEffects.None,
+                        1f);
+                    break;
+                case 7:
+                    p_SpriteBatch.Draw(NightWindow,
+                        new Vector2(1600, 770),
+                        new Rectangle(0, 0, 500, 500),
+                        Color.White,
+                        0f,
+                        new Vector2(250, 250),
+                        1f,
+                        SpriteEffects.None,
+                        1f);
+                    break;
+                default:
+                    p_SpriteBatch.Draw(DaytimeWindow,
+                        new Vector2(1600, 770),
+                        new Rectangle(0, 0, 500, 500),
+                        Color.White,
+                        0f,
+                        new Vector2(250, 250),
+                        1f,
+                        SpriteEffects.None,
+                        1f);
+                    break;
+            }
         }
 
         private void RenderBank(SpriteBatch p_SpriteBatch,

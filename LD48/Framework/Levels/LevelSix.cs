@@ -35,9 +35,12 @@ namespace LD48.Framework.Levels
             LevelZenPar = 8;
             LevelWarning = "\"-\" is forbidden!";
             DialogueBox.AddText(new DialogueEntry {
-                Text = "Welcome to Fore!",
-                Speaker = GameInterface.Claire,
-                Callback = () => PlaySong(false)
+                Text = "Look at you! Basically a pro at this point! You sure you've never played before?",
+                Speaker = GameInterface.Claire
+            });
+            DialogueBox.AddText(new DialogueEntry {
+                Text = "I'm not sure you need any advice at this point. Keep it up!",
+                Speaker = GameInterface.Claire
             });
             LevelRemainingTime = TimeSpan.FromMinutes(8);
         }

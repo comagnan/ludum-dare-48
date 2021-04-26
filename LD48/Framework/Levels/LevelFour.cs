@@ -33,9 +33,25 @@ namespace LD48.Framework.Levels
             GoalValue = 27;
             LevelPar = 3;
             LevelZenPar = 7;
-            LevelWarning = "Use at most five operators!";
+            LevelWarning = "Use at most five operations!";
             DialogueBox.AddText(new DialogueEntry {
-                Text = "Welcome to Fore!",
+                Text = "That last hole got me thinking.",
+                Speaker = GameInterface.Claire
+            });
+            DialogueBox.AddText(new DialogueEntry {
+                Text = "What do you think they did... Before they invented the number 0?",
+                Speaker = GameInterface.Claire
+            });
+            DialogueBox.AddText(new DialogueEntry {
+                Text = "Do you think they finished a plate of cookies and went \"WHAT? WHAT KIND OF ARCANE NONSENSE AM I LOOKING AT\"?",
+                Speaker = GameInterface.Claire
+            });
+            DialogueBox.AddText(new DialogueEntry {
+                Text = "Oh! Right! Starting from now, the holes are going to have special rules you have to abide by.",
+                Speaker = GameInterface.Claire
+            });
+            DialogueBox.AddText(new DialogueEntry {
+                Text = "For this one, you have to use 5 operations or less. The funny symbols between the numbers. Parenthesis don't count though.",
                 Speaker = GameInterface.Claire,
                 Callback = () => PlaySong(false)
             });
@@ -67,7 +83,7 @@ namespace LD48.Framework.Levels
             bool operationLimitRespected = TextBox.Text.String.Count(x => x == '/' || x == '*' || x == '-' || x == '+') <= 5;
 
             if (!operationLimitRespected) {
-                throw new PuzzleUnsolvedException("Bzzt! You've used too many operators! You need to stick to 5 or less.");
+                throw new PuzzleUnsolvedException("Bzzt! You've used too many operations! You need to stick to 5 or less.");
             }
 
             return base.IsEquationValid() && operationLimitRespected;

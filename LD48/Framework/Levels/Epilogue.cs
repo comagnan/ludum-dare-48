@@ -6,7 +6,6 @@ using LD48.Framework.Input;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using MonoGame.Extended.Sprites;
 
 namespace LD48.Framework.Levels
 {
@@ -33,7 +32,15 @@ namespace LD48.Framework.Levels
             LevelPar = 6;
             LevelZenPar = 8;
             DialogueBox.AddText(new DialogueEntry {
-                Text = "Welcome to Fore!",
+                Text = "Hmm? You want to play more?",
+                Speaker = GameInterface.Claire
+            });
+            DialogueBox.AddText(new DialogueEntry {
+                Text = "I like the enthusiasm! But we've been at this for a while now haha. I'm too tired to come up with anything new...",
+                Speaker = GameInterface.Claire
+            });
+            DialogueBox.AddText(new DialogueEntry {
+                Text = "Hmm... We could redo the first hole. But then we're done for the day, you hear?",
                 Speaker = GameInterface.Claire,
                 Callback = () => PlaySong(false)
             });
@@ -58,6 +65,28 @@ namespace LD48.Framework.Levels
             base.Draw(p_GameTime, p_SpriteBatch);
 
             p_SpriteBatch.End();
+        }
+
+        protected override void FinishLevel()
+        {
+            StopSong();
+            DialogueBox.AddText(new DialogueEntry {
+                Text = "You did it again!",
+                Speaker = GameInterface.Claire
+            });
+            DialogueBox.AddText(new DialogueEntry {
+                Text = "Now I reaaaally need some shut eye though...",
+                Speaker = GameInterface.Claire
+            });
+            DialogueBox.AddText(new DialogueEntry {
+                Text = "So...",
+                Speaker = GameInterface.Claire
+            });
+            DialogueBox.AddText(new DialogueEntry {
+                Text = "Thanks for playing!",
+                Speaker = GameInterface.Claire,
+                Callback = () => IsLevelOver = true
+            });
         }
     }
 }
