@@ -84,16 +84,22 @@ namespace LD48.Framework.Input
                 }
             };
 
-        public static CompositeInput bassTwitter =>
+        public static CompositeInput BassTwitter =>
             new CompositeInput {
                 ButtonInputs = new List<Buttons> { Buttons.LeftShoulder },
-                KeyInputs = new List<Keys> { Keys.NumPad1 }
+                KeyInputs = new List<Keys> { Keys.NumPad1, Keys.D1 }
             };
 
-        public static CompositeInput triggerTwitter =>
+        public static CompositeInput TriggerTwitter =>
             new CompositeInput {
                 ButtonInputs = new List<Buttons> { Buttons.RightShoulder },
-                KeyInputs = new List<Keys> { Keys.NumPad2 }
+                KeyInputs = new List<Keys> { Keys.NumPad2, Keys.D2 }
+            };
+
+        public static CompositeInput AlphadeusBandcamp =>
+            new CompositeInput {
+                ButtonInputs = new List<Buttons> { Buttons.RightTrigger },
+                KeyInputs = new List<Keys> { Keys.NumPad3, Keys.D3 }
             };
     }
 }

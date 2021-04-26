@@ -59,15 +59,21 @@ namespace LD48.UserInterface
         {
             if (m_ShowHowTo || m_ShowCredits) {
                 if (m_ShowCredits) {
-                    if (p_InputController.IsButtonPress(InputConfiguration.bassTwitter)) {
+                    if (p_InputController.IsButtonPress(InputConfiguration.BassTwitter)) {
                         try {
                             OpenUrl("https://twitter.com/TheBlondeBass");
                         } catch (Exception e) {
                             Console.WriteLine(e.Message);
                         }
-                    } else if (p_InputController.IsButtonPress(InputConfiguration.triggerTwitter)) {
+                    } else if (p_InputController.IsButtonPress(InputConfiguration.TriggerTwitter)) {
                         try {
                             OpenUrl("https://twitter.com/triggerpigart");
+                        } catch (Exception e) {
+                            Console.WriteLine(e.Message);
+                        }
+                    } else if (p_InputController.IsButtonPress(InputConfiguration.AlphadeusBandcamp)) {
+                        try {
+                            OpenUrl("https://alphadeus.bandcamp.com/");
                         } catch (Exception e) {
                             Console.WriteLine(e.Message);
                         }
