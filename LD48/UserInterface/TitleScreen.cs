@@ -79,12 +79,12 @@ namespace LD48.UserInterface
                         }
                     }
                 }
-                if (p_InputController.IsButtonPress(InputConfiguration.Confirm) || p_InputController.IsButtonPress(InputConfiguration.Return)) {
+                if (p_InputController.IsButtonPress(InputConfiguration.Submit) || p_InputController.IsButtonPress(InputConfiguration.Return)) {
                     m_ShowHowTo = false;
                     m_ShowCredits = false;
                 }
             } else if (ShowOptions) {
-                if (p_InputController.IsButtonPress(InputConfiguration.Confirm)) {
+                if (p_InputController.IsButtonPress(InputConfiguration.Submit)) {
                     switch (m_CurrentPointer) {
                         case 0:
                             IsClosed = true;

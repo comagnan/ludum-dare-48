@@ -38,11 +38,11 @@ namespace LD48.Framework.Levels
             LevelZenPar = 8;
             LevelWarning = "You must use all sevens!";
             DialogueBox.AddText(new DialogueEntry {
-                Text = "BWAHAHAHA! TREMBLE, MORTALS, FOR AN ANCIENT EVIL HAS AWOKEN. ME!",
+                Text = "BWAHAHAHA! TREMBLE, MORTALS, FOR AN ANCIENT EVIL HAS AWOKEN. (That's me!)",
                 Speaker = "Evil McBad"
             });
             DialogueBox.AddText(new DialogueEntry {
-                Text = "AND I WILL RULE THE WORLD, UNLESS HUMANITY PROVES THEIR WORTH AT MEANINGLESS BRAIN TEASERS!",
+                Text = "AND I WILL RULE THE WORLD, UNLESS HUMANITY PROVES ITS WORTH AT MEANINGLESS BRAIN TEASERS!",
                 Speaker = "Evil McBad"
             });
             DialogueBox.AddText(new DialogueEntry {
@@ -92,7 +92,7 @@ namespace LD48.Framework.Levels
                 Speaker = "Evil McBad"
             });
             DialogueBox.AddText(new DialogueEntry {
-                Text = "Wow, you did it! You're a hero!",
+                Text = "Wow, you did it! Great job, hero!",
                 Speaker = GameInterface.Claire,
                 Callback = () => IsLevelOver = true
             });

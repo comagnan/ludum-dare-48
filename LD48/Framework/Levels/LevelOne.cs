@@ -77,7 +77,7 @@ namespace LD48.Framework.Levels
                 Speaker = GameInterface.Claire
             });
             DialogueBox.AddText(new DialogueEntry {
-                Text = "Only digits count towards your score, by the way. You don't have to things like \"----3\" or (((5))). Unless you want to.",
+                Text = "Only digits count towards your score, by the way. You don't need to do things like \"----3\" or (((5))). Unless you want to, of course!",
                 Speaker = GameInterface.Claire
             });
             DialogueBox.AddText(new DialogueEntry {

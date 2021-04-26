@@ -39,8 +39,9 @@ namespace LD48.Framework.Levels
                 Speaker = GameInterface.Claire
             });
             DialogueBox.AddText(new DialogueEntry {
-                Text = "I'm not sure you need any advice at this point. Keep it up!",
-                Speaker = GameInterface.Claire
+                Text = "I don't think you need any advice at this point. Keep it up!",
+                Speaker = GameInterface.Claire,
+                Callback = () => PlaySong(false)
             });
             LevelRemainingTime = TimeSpan.FromMinutes(8);
         }

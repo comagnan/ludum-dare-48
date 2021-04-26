@@ -45,7 +45,7 @@ namespace LD48.Framework.Levels
                 Speaker = GameInterface.Claire
             });
             DialogueBox.AddText(new DialogueEntry {
-                Text = "I often go in reverse from the goal. If it's a big number, I first find what its factors are.",
+                Text = "I like to go in reverse from the goal. If it's a big number, I find what its factors are first.",
                 Speaker = GameInterface.Claire
             });
             DialogueBox.AddText(new DialogueEntry {
