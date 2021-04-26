@@ -14,7 +14,7 @@ namespace LD48.Framework.Levels
         /// <summary>
         /// Constructs a new level.
         /// </summary>
-        public LevelOne(ContentManager p_Content) : base(p_Content, 1, "Humble Beginnings")
+        public LevelOne(ContentManager p_Content) : base(p_Content, 1, "\"Humble Beginnings\"")
         {
             NumberBank = new List<char> {
                 '0',

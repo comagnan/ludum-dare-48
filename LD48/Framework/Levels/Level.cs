@@ -15,7 +15,6 @@ using Microsoft.Xna.Framework.Media;
 
 namespace LD48.Framework.Levels
 {
-    // As you can see, I've knocked over many chairs because I get so tilted at the towers.
     public class Level : IDisposable
     {
         private DataTable m_Table;
@@ -29,6 +28,7 @@ namespace LD48.Framework.Levels
         protected string LevelName;
         protected string LevelWarning;
         protected int LevelZenPar;
+        protected TimeSpan LevelRemainingTime;
 
         protected GraphicsDevice GraphicsDevice;
         protected Texture2D Rectangle;
@@ -67,6 +67,8 @@ namespace LD48.Framework.Levels
             NumberBank = new List<char>();
             IsLevelOver = false;
             LevelName = p_LevelName;
+            LevelRemainingTime = TimeSpan.FromMinutes(4);
+            //LevelRemainingTime = TimeSpan.FromSeconds(5);
         }
 
         public void Dispose()
@@ -86,6 +88,7 @@ namespace LD48.Framework.Levels
             ClaireDefault = Content.Load<Texture2D>("Interface/mascot");
             ClaireZen = Content.Load<Texture2D>("Interface/claire_zen");
             ClaireAngery = Content.Load<Texture2D>("Interface/claire_timeout");
+            ClaireAngeriest = Content.Load<Texture2D>("Interface/claire_further_beyond");
             EquationFont = Content.Load<SpriteFont>("Title");
             Rule = Content.Load<Texture2D>("Interface/rule");
 
@@ -110,6 +113,18 @@ namespace LD48.Framework.Levels
                                    in InputController p_InputController)
         {
             if (!DialogueBox.IsVisible()) {
+                if (LevelRemainingTime != TimeSpan.Zero) {
+                    if (LevelRemainingTime > p_GameTime.ElapsedGameTime) {
+                        LevelRemainingTime -= p_GameTime.ElapsedGameTime;
+                    } else {
+                        DialogueBox.AddText(new DialogueEntry {
+                            Text = "C'mon, seriously? Submit anything already!",
+                            Speaker = GameInterface.Claire
+                        });
+                        LevelRemainingTime = TimeSpan.Zero;
+                    }
+                }
+                
                 TextBox.Active = true;
                 TextBox.Update();
 
@@ -145,6 +160,16 @@ namespace LD48.Framework.Levels
                                   SpriteBatch p_SpriteBatch,
                                   SpriteFont p_SpriteFont)
         {
+            string timeString = $@"Remaining time: {LevelRemainingTime:mm\:ss}";
+            p_SpriteBatch.DrawString(p_SpriteFont,
+                timeString,
+                new Vector2(70, 820),
+                Color.Black,
+                (float) Math.Asin(-1),
+                Vector2.Zero,
+                0.5f,
+                SpriteEffects.None,
+                1f);
             p_SpriteBatch.DrawString(p_SpriteFont,
                 $"{GoalValue}",
                 new Vector2(1720, 150),
@@ -274,7 +299,27 @@ namespace LD48.Framework.Levels
         protected void DrawClaire(GameTime p_GameTime,
                                   SpriteBatch p_SpriteBatch)
         {
-            if (GetScore() >= LevelZenPar) {
+            if (LevelRemainingTime == TimeSpan.Zero) {
+                p_SpriteBatch.Draw(ClaireAngeriest,
+                    new Vector2(1645, 750 + 2 * (float) Math.Sin(100 * p_GameTime.TotalGameTime.TotalSeconds)),
+                    new Rectangle(0, 0, 500, 600),
+                    Color.White,
+                    0f,
+                    new Vector2(250, 300),
+                    1f,
+                    SpriteEffects.None,
+                    1f);
+            } else if (LevelRemainingTime < TimeSpan.FromMinutes(1)) {
+                p_SpriteBatch.Draw(ClaireAngery,
+                    new Vector2(1645, 750 + 2 * (float) Math.Sin(50 * p_GameTime.TotalGameTime.TotalSeconds)),
+                    new Rectangle(0, 0, 500, 600),
+                    Color.White,
+                    0f,
+                    new Vector2(250, 300),
+                    1f,
+                    SpriteEffects.None,
+                    1f);
+            } else if (GetScore() >= LevelZenPar) {
                 p_SpriteBatch.Draw(ClaireZen,
                     new Vector2(1645, 750 + 20 * (float) Math.Sin(p_GameTime.TotalGameTime.TotalSeconds / 2f)),
                     new Rectangle(0, 0, 500, 600),
@@ -289,7 +334,7 @@ namespace LD48.Framework.Levels
                     new Vector2(1645, 750),
                     new Rectangle(0, 0, 500, 600),
                     Color.White,
-                    (float) Math.Sin(p_GameTime.TotalGameTime.TotalSeconds / 2f) / 8f,
+                    0f,
                     new Vector2(250, 300),
                     1f,
                     SpriteEffects.None,

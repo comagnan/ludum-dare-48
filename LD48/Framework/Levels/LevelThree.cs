@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using LD48.Content;
 using LD48.Dialogue;
 using LD48.Framework.Input;
@@ -14,7 +15,7 @@ namespace LD48.Framework.Levels
         /// <summary>
         /// Constructs a new level.
         /// </summary>
-        public LevelThree(ContentManager p_Content) : base(p_Content, 3, "Seeing Double")
+        public LevelThree(ContentManager p_Content) : base(p_Content, 3, "\"Seeing Double\"")
         {
             NumberBank = new List<char> {
                 '2',
@@ -33,6 +34,7 @@ namespace LD48.Framework.Levels
                 Speaker = GameInterface.Claire,
                 Callback = () => PlaySong(false)
             });
+            LevelRemainingTime = TimeSpan.FromMinutes(6);
         }
 
         public override void Update(GameTime p_GameTime,

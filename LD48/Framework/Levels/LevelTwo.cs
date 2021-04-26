@@ -14,7 +14,7 @@ namespace LD48.Framework.Levels
         /// <summary>
         /// Constructs a new level.
         /// </summary>
-        public LevelTwo(ContentManager p_Content) : base(p_Content, 2, "Go home")
+        public LevelTwo(ContentManager p_Content) : base(p_Content, 2, "\"Go Home\"")
         {
             NumberBank = new List<char> {
                 '1',

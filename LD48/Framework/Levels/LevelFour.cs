@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using LD48.Content;
 using LD48.Dialogue;
@@ -15,7 +16,7 @@ namespace LD48.Framework.Levels
         /// <summary>
         /// Constructs a new level.
         /// </summary>
-        public LevelFour(ContentManager p_Content) : base(p_Content, 4, "Too Much of a Good Thing")
+        public LevelFour(ContentManager p_Content) : base(p_Content, 4, "\"Too Much of a Good Thing\"")
         {
             NumberBank = new List<char> {
                 '1',
@@ -38,6 +39,7 @@ namespace LD48.Framework.Levels
                 Speaker = GameInterface.Claire,
                 Callback = () => PlaySong(false)
             });
+            LevelRemainingTime = TimeSpan.FromMinutes(6);
         }
 
         public override void Update(GameTime p_GameTime,

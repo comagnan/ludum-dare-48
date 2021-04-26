@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using LD48.Content;
 using LD48.Dialogue;
@@ -15,7 +16,7 @@ namespace LD48.Framework.Levels
         /// <summary>
         /// Constructs a new level.
         /// </summary>
-        public LevelSix(ContentManager p_Content) : base(p_Content, 6, "No Going Back")
+        public LevelSix(ContentManager p_Content) : base(p_Content, 6, "\"No Going Back\"")
         {
             NumberBank = new List<char> {
                 '1',
@@ -38,6 +39,7 @@ namespace LD48.Framework.Levels
                 Speaker = GameInterface.Claire,
                 Callback = () => PlaySong(false)
             });
+            LevelRemainingTime = TimeSpan.FromMinutes(8);
         }
 
         public override void Update(GameTime p_GameTime,

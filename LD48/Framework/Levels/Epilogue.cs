@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using LD48.Content;
 using LD48.Dialogue;
 using LD48.Framework.Input;
@@ -14,7 +15,7 @@ namespace LD48.Framework.Levels
         /// <summary>
         /// Constructs a new level.
         /// </summary>
-        public Epilogue(ContentManager p_Content) : base(p_Content, 8, "Thanks for playing!")
+        public Epilogue(ContentManager p_Content) : base(p_Content, 8, "\"Thanks for playing!\"")
         {
             NumberBank = new List<char> {
                 '0',
@@ -36,6 +37,7 @@ namespace LD48.Framework.Levels
                 Speaker = GameInterface.Claire,
                 Callback = () => PlaySong(false)
             });
+            LevelRemainingTime = TimeSpan.FromMinutes(5);
         }
 
         public override void Update(GameTime p_GameTime,
