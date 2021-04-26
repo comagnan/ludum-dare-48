@@ -33,6 +33,11 @@ namespace LD48.Framework.Levels
             LevelPar = 3;
             LevelZenPar = 7;
             LevelWarning = "Use at most five operators!";
+            DialogueBox.AddText(new DialogueEntry {
+                Text = "Welcome to Fore!",
+                Speaker = GameInterface.Claire,
+                Callback = () => PlaySong(false)
+            });
         }
 
         public override void Update(GameTime p_GameTime,

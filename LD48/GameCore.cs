@@ -9,7 +9,7 @@ namespace LD48
 {
     public class GameCore : Game
     {
-        private const string BASE_GAME_TITLE = "Fairies of Galaxia";
+        private const string BASE_GAME_TITLE = "FORE!";
 
         private readonly GraphicsDeviceManager m_Graphics;
 
@@ -78,6 +78,7 @@ namespace LD48
             if (!m_TitleScreen.IsClosed) {
                 m_TitleScreen.Update(p_GameTime, m_InputController);
             } else if (m_PauseMenu.IsPausedOrTransitioning) {
+                m_CurrentLevel.TextBox.Active = false;
                 m_PauseMenu.Update(p_GameTime, m_InputController);
                 if (m_PauseMenu.ExitRequested) {
                     Exit();

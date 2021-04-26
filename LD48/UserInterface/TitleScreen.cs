@@ -1,4 +1,6 @@
 using System;
+using System.Diagnostics;
+using System.Runtime.InteropServices;
 using LD48.Content;
 using LD48.Framework.Input;
 using Microsoft.Xna.Framework;
@@ -13,17 +15,16 @@ namespace LD48.UserInterface
         private const int ITEM_DISTANCE = 120;
         private const int MAXIMUM_POINTER = 3;
         private readonly Texture2D m_TitleScreenArt;
-        private readonly Texture2D m_SelectionBubble;
+        private readonly Texture2D m_HowToPlay;
+        private readonly Texture2D m_Credits;
 
         private readonly SpriteFont m_Font;
         private readonly Song m_TitleScreenSong;
 
         // Graphics
         private Texture2D m_ButtonTexture;
-        private TimeSpan m_TimeSinceButtonPress;
 
         private int m_CurrentPointer;
-        private int m_Offset;
         private bool m_ShowHowTo;
         private bool m_ShowCredits;
 
@@ -37,9 +38,10 @@ namespace LD48.UserInterface
                            ContentManager p_Content)
         {
             m_TitleScreenArt = p_Content.Load<Texture2D>("Interface/title_screen");
-            m_SelectionBubble = p_Content.Load<Texture2D>("Interface/selection");
+            m_HowToPlay = p_Content.Load<Texture2D>("Interface/howto");
+            m_Credits = p_Content.Load<Texture2D>("Interface/credits");
             m_Font = p_Content.Load<SpriteFont>("Dialogue");
-            m_TitleScreenSong = p_Content.Load<Song>("SFX/betterdays_todelete");
+            m_TitleScreenSong = p_Content.Load<Song>("SFX/titlescreen");
             m_ButtonTexture = p_Content.Load<Texture2D>("Interface/button");
             MediaPlayer.Play(m_TitleScreenSong);
             MediaPlayer.IsRepeating = true;
@@ -56,6 +58,21 @@ namespace LD48.UserInterface
                            in InputController p_InputController)
         {
             if (m_ShowHowTo || m_ShowCredits) {
+                if (m_ShowCredits) {
+                    if (p_InputController.IsButtonPress(InputConfiguration.bassTwitter)) {
+                        try {
+                            OpenUrl("https://twitter.com/TheBlondeBass");
+                        } catch (Exception e) {
+                            Console.WriteLine(e.Message);
+                        }
+                    } else if (p_InputController.IsButtonPress(InputConfiguration.triggerTwitter)) {
+                        try {
+                            OpenUrl("https://twitter.com/triggerpigart");
+                        } catch (Exception e) {
+                            Console.WriteLine(e.Message);
+                        }
+                    }
+                }
                 if (p_InputController.IsButtonPress(InputConfiguration.Confirm) || p_InputController.IsButtonPress(InputConfiguration.Return)) {
                     m_ShowHowTo = false;
                     m_ShowCredits = false;
@@ -103,25 +120,9 @@ namespace LD48.UserInterface
             //Console.WriteLine(m_Font.MeasureString(GameInterface.GameTitle));
 
             if (m_ShowHowTo) {
-                p_SpriteBatch.DrawString(m_Font,
-                    "Your objective is to match a value with the longest maths equation possible.\nUse your keyboard to write your equation, then press Enter after you're done.\n+,-,/ and * are the accepted symbols for plus, minus, divided by and multiplied respectively.\nYou can use parenthesis! But only digits count towards par.\nGo for a high score! You can always go deeper.\nPress F to toggle full screen, and P to open the menu.",
-                    new Vector2(100, 100),
-                    Color.White,
-                    0f,
-                    Vector2.Zero,
-                    0.5f,
-                    SpriteEffects.None,
-                    1f);
+                p_SpriteBatch.Draw(m_HowToPlay, new Vector2(0, 0), Color.White);
             } else if (m_ShowCredits) {
-                p_SpriteBatch.DrawString(m_Font,
-                    "A game by: \nCharles-Olivier Magnan (@TheBlondeBass) and \nTriggerPigKing (@triggerpigart) \nbuilt in C# over 72h for Ludum Dare 48.",
-                    new Vector2(100, 100),
-                    Color.White,
-                    0f,
-                    Vector2.Zero,
-                    1f,
-                    SpriteEffects.None,
-                    1f);
+                p_SpriteBatch.Draw(m_Credits, new Vector2(0, 0), Color.White);
             } else {
                 if (ShowOptions) {
                     p_SpriteBatch.Draw(m_ButtonTexture,
@@ -210,6 +211,34 @@ namespace LD48.UserInterface
                         1f,
                         SpriteEffects.None,
                         1f);
+                }
+            }
+        }
+
+        private void OpenUrl(string url)
+        {
+            try
+            {
+                Process.Start(url);
+            }
+            catch
+            {
+                // hack because of this: https://github.com/dotnet/corefx/issues/10361
+                if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                {
+                    Process.Start(new ProcessStartInfo { FileName = url, UseShellExecute = true });
+                }
+                else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+                {
+                    Process.Start("xdg-open", url);
+                }
+                else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+                {
+                    Process.Start("open", url);
+                }
+                else
+                {
+                    throw;
                 }
             }
         }

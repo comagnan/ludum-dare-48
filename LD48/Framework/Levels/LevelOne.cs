@@ -29,8 +29,9 @@ namespace LD48.Framework.Levels
                 '9'
             };
             DialogueBox.AddText(new DialogueEntry {
-                Text = "Welcome to Galaxia!",
-                Sprite = GameInterface.Beatrice
+                Text = "Welcome to Fore!",
+                Speaker = GameInterface.Claire,
+                Callback = () => PlaySong(false)
             });
         }
 

@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using LD48.Content;
+using LD48.Dialogue;
 using LD48.Framework.Input;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
@@ -34,12 +36,11 @@ namespace LD48.Framework.Levels
             LevelPar = 5;
             LevelZenPar = 8;
             LevelWarning = "You must use all sevens!";
-        }
-
-        public override void Initialize(GameWindow p_Window,
-                                        GraphicsDevice p_GraphicsDevice)
-        {
-            base.Initialize(p_Window, p_GraphicsDevice);
+            DialogueBox.AddText(new DialogueEntry {
+                Text = "Welcome to Fore!",
+                Speaker = GameInterface.Claire,
+                Callback = () => PlaySong(true)
+            });
         }
 
         public override void Update(GameTime p_GameTime,

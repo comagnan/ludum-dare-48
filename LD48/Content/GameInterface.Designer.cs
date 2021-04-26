@@ -61,38 +61,11 @@ namespace LD48.Content {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Alba.
+        ///   Looks up a localized string similar to Claire.
         /// </summary>
-        internal static string Alba {
+        internal static string Claire {
             get {
-                return ResourceManager.GetString("Alba", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Alexis.
-        /// </summary>
-        internal static string Alexis {
-            get {
-                return ResourceManager.GetString("Alexis", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Béatrice.
-        /// </summary>
-        internal static string Beatrice {
-            get {
-                return ResourceManager.GetString("Beatrice", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Collection.
-        /// </summary>
-        internal static string Collection {
-            get {
-                return ResourceManager.GetString("Collection", resourceCulture);
+                return ResourceManager.GetString("Claire", resourceCulture);
             }
         }
         
@@ -115,33 +88,6 @@ namespace LD48.Content {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Health.
-        /// </summary>
-        internal static string Health {
-            get {
-                return ResourceManager.GetString("Health", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to History.
-        /// </summary>
-        internal static string History {
-            get {
-                return ResourceManager.GetString("History", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Home.
-        /// </summary>
-        internal static string Home {
-            get {
-                return ResourceManager.GetString("Home", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to How to play.
         /// </summary>
         internal static string HowToPlay {
@@ -156,33 +102,6 @@ namespace LD48.Content {
         internal static string MainMenu {
             get {
                 return ResourceManager.GetString("MainMenu", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Mana.
-        /// </summary>
-        internal static string Mana {
-            get {
-                return ResourceManager.GetString("Mana", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Mélodie.
-        /// </summary>
-        internal static string Melodie {
-            get {
-                return ResourceManager.GetString("Melodie", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Options.
-        /// </summary>
-        internal static string Options {
-            get {
-                return ResourceManager.GetString("Options", resourceCulture);
             }
         }
         
@@ -214,15 +133,6 @@ namespace LD48.Content {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Restart.
-        /// </summary>
-        internal static string Restart {
-            get {
-                return ResourceManager.GetString("Restart", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Resume.
         /// </summary>
         internal static string Resume {
@@ -232,29 +142,11 @@ namespace LD48.Content {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Richard.
-        /// </summary>
-        internal static string Richard {
-            get {
-                return ResourceManager.GetString("Richard", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Save/Quit.
         /// </summary>
         internal static string Save_Quit {
             get {
                 return ResourceManager.GetString("Save/Quit", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Sign.
-        /// </summary>
-        internal static string Sign {
-            get {
-                return ResourceManager.GetString("Sign", resourceCulture);
             }
         }
         

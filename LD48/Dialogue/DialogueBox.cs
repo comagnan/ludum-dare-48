@@ -33,10 +33,6 @@ namespace LD48.Dialogue
         private SpriteFont m_RegularFont;
         private SpriteFont m_LargeFont;
 
-        private Texture2D m_AlexisSprite;
-        private Texture2D m_BeatriceSprite;
-        private Texture2D m_SignSprite;
-
         private Texture2D m_DownArrow;
 
         private SoundEffect m_DialogueSoundEffect;
@@ -76,11 +72,9 @@ namespace LD48.Dialogue
                            in InputController p_InputController)
         {
             if (!IsActive() && m_Offset < m_BackgroundShape.Height) {
-                // TODO: Acceleration over constant speed would be a nice plus.
                 m_Offset += p_GameTime.ElapsedGameTime.Milliseconds * MOVEMENT_SPEED;
             } else if (IsActive() && m_IsInitialized) {
                 if (m_Offset > 0) {
-                    // TODO: Deceleration over constant speed would be a nice plus.
                     m_Offset -= p_GameTime.ElapsedGameTime.Milliseconds * MOVEMENT_SPEED;
                 } else if (!IsShowingFullText()) {
                     if (p_InputController.IsButtonPress(InputConfiguration.Confirm) || p_InputController.IsButtonPress(InputConfiguration.Return)) {
@@ -160,12 +154,6 @@ namespace LD48.Dialogue
                             new Vector2(m_TextPosition.X, m_TextPosition.Y + 50 * i),
                             Color.White);
                     }
-                }
-
-                if (!string.IsNullOrEmpty(dialogueEntry.Sprite)) {
-                    int spriteSize = 320;
-                    Rectangle destination = new(m_BackgroundShape.Right - spriteSize, m_BackgroundShape.Bottom - spriteSize, spriteSize, spriteSize);
-                    p_SpriteBatch.Draw(GetSprite(dialogueEntry.Sprite), destination, Color.White);
                 }
 
                 if (m_CurrentText.Count > MAXIMUM_LINES && IsShowingFullText()) {
@@ -249,18 +237,6 @@ namespace LD48.Dialogue
             return p_Font == DialogueFont.Standard ? m_RegularFont : m_LargeFont;
         }
 
-        private Texture2D GetSprite(string p_String)
-        {
-            if (p_String == GameInterface.Alexis) {
-                return m_AlexisSprite;
-            }
-
-            if (p_String == GameInterface.Beatrice) {
-                return m_BeatriceSprite;
-            }
-            return m_SignSprite;
-        }
-
         private bool IsShowingFullText()
         {
             int maxColumns = Math.Min(m_CurrentText.Count, MAXIMUM_LINES);
@@ -275,9 +251,6 @@ namespace LD48.Dialogue
 
             m_RegularFont = m_Content.Load<SpriteFont>("Dialogue");
             m_LargeFont = m_Content.Load<SpriteFont>("Dialogue");
-            m_AlexisSprite = m_Content.Load<Texture2D>("Portraits/alexis_worried");
-            m_BeatriceSprite = m_Content.Load<Texture2D>("Portraits/beatrice_smiling");
-            m_SignSprite = m_Content.Load<Texture2D>("Portraits/Sign");
             m_DownArrow = m_Content.Load<Texture2D>("arrow");
 
             m_DialogueSoundEffect = m_Content.Load<SoundEffect>("SFX/alexis_dialogue");

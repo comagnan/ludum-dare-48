@@ -29,6 +29,11 @@ namespace LD48.Framework.Levels
             };
             GoalValue = 0;
             LevelPar = 4;
+            DialogueBox.AddText(new DialogueEntry {
+                Text = "Welcome to Fore!",
+                Speaker = GameInterface.Claire,
+                Callback = () => PlaySong(false)
+            });
         }
 
         public override void Update(GameTime p_GameTime,

@@ -28,12 +28,11 @@ namespace LD48.Framework.Levels
             };
             GoalValue = 9;
             LevelPar = 3;
-        }
-
-        public override void Initialize(GameWindow p_Window,
-                                        GraphicsDevice p_GraphicsDevice)
-        {
-            base.Initialize(p_Window, p_GraphicsDevice);
+            DialogueBox.AddText(new DialogueEntry {
+                Text = "Welcome to Fore!",
+                Speaker = GameInterface.Claire,
+                Callback = () => PlaySong(false)
+            });
         }
 
         public override void Update(GameTime p_GameTime,

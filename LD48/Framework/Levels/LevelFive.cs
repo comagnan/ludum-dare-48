@@ -31,6 +31,11 @@ namespace LD48.Framework.Levels
             GoalValue = 156;
             LevelPar = 4;
             LevelWarning = "Only use numbers with 2+ digits!";
+            DialogueBox.AddText(new DialogueEntry {
+                Text = "Welcome to Fore!",
+                Speaker = GameInterface.Claire,
+                Callback = () => PlaySong(false)
+            });
         }
 
         public override void Update(GameTime p_GameTime,

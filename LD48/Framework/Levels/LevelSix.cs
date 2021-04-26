@@ -33,12 +33,11 @@ namespace LD48.Framework.Levels
             LevelPar = 6;
             LevelZenPar = 8;
             LevelWarning = "\"-\" is forbidden!";
-        }
-
-        public override void Initialize(GameWindow p_Window,
-                                        GraphicsDevice p_GraphicsDevice)
-        {
-            base.Initialize(p_Window, p_GraphicsDevice);
+            DialogueBox.AddText(new DialogueEntry {
+                Text = "Welcome to Fore!",
+                Speaker = GameInterface.Claire,
+                Callback = () => PlaySong(false)
+            });
         }
 
         public override void Update(GameTime p_GameTime,

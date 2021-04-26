@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
+using LD48.Framework.Input;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
@@ -52,7 +52,7 @@ namespace LD48.Framework.TextBox
             }
         }
 
-        public bool Active = true;
+        public bool Active;
 
         public Box(Rectangle area,
                    int maxCharacters,
@@ -155,13 +155,13 @@ namespace LD48.Framework.TextBox
             }
         }
 
-        private void KeyPressed(object sender,
-                                KeyboardInput.KeyEventArgs e,
-                                KeyboardState ks)
+        private void KeyPressed(object p_Sender,
+                                KeyboardInput.KeyEventArgs p_Event,
+                                KeyboardState p_Ks)
         {
             if (Active) {
                 int oldPos = Cursor.TextCursor;
-                switch (e.KeyCode) {
+                switch (p_Event.KeyCode) {
                     case Keys.Left:
                         if (KeyboardInput.CtrlDown) {
                             Cursor.TextCursor = IndexOfLastCharBeforeWhitespace(Cursor.TextCursor, Text.Characters);
@@ -190,14 +190,24 @@ namespace LD48.Framework.TextBox
                         break;
                     case Keys.Delete:
                         if (DelSelection() == null && Cursor.TextCursor < Text.Length) {
-                            m_RemoveEffect.Play();
+                            try {
+                                m_RemoveEffect.Play();
+                            } catch (InstancePlayLimitException) {
+                                m_KeyPressEffect.CreateInstance();
+                                m_KeyPressEffect.Play();
+                            }
                             Text.RemoveCharacters(Cursor.TextCursor, Cursor.TextCursor + 1);
                         }
 
                         break;
                     case Keys.Back:
                         if (DelSelection() == null && Cursor.TextCursor > 0) {
-                            m_RemoveEffect.Play();
+                            try {
+                                m_RemoveEffect.Play();
+                            } catch (InstancePlayLimitException) {
+                                m_KeyPressEffect.CreateInstance();
+                                m_KeyPressEffect.Play();
+                            }
                             Text.RemoveCharacters(Cursor.TextCursor - 1, Cursor.TextCursor);
                             Cursor.TextCursor--;
                         }
@@ -263,7 +273,12 @@ namespace LD48.Framework.TextBox
                 if (IsLegalCharacter(Renderer.Font, p_E.Character) && !p_E.Character.Equals('\r') && !p_E.Character.Equals('\n')) {
                     DelSelection();
                     if (Text.Length < Text.MaxLength) {
-                        m_KeyPressEffect.Play();
+                        try {
+                            m_KeyPressEffect.Play();
+                        } catch (InstancePlayLimitException) {
+                            m_KeyPressEffect.CreateInstance();
+                            m_KeyPressEffect.Play();
+                        }
                         Text.InsertCharacter(Cursor.TextCursor, p_E.Character);
                         Cursor.TextCursor++;
                     }

@@ -11,6 +11,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Media;
 
 namespace LD48.Framework.Levels
 {
@@ -33,16 +34,21 @@ namespace LD48.Framework.Levels
         protected Texture2D Rectangle;
         protected Texture2D Background;
         protected Texture2D Rule;
-        protected Box TextBox;
 
         protected Texture2D ClaireDefault;
         protected Texture2D ClaireZen;
+        protected Texture2D ClaireAngery;
+        protected Texture2D ClaireAngeriest;
+
+        private Song m_LevelSong;
+        private Song m_BossSong;
 
         protected SpriteFont EquationFont;
 
         // Level content.        
         protected ContentManager Content { get; }
         public readonly int LevelId;
+        public Box TextBox;
 
         public bool IsLevelOver { get; protected set; }
 
@@ -79,13 +85,17 @@ namespace LD48.Framework.Levels
             Background = Content.Load<Texture2D>("Interface/stage");
             ClaireDefault = Content.Load<Texture2D>("Interface/mascot");
             ClaireZen = Content.Load<Texture2D>("Interface/claire_zen");
+            ClaireAngery = Content.Load<Texture2D>("Interface/claire_timeout");
             EquationFont = Content.Load<SpriteFont>("Title");
             Rule = Content.Load<Texture2D>("Interface/rule");
+
+            m_LevelSong = Content.Load<Song>("SFX/stage_1");
+            m_BossSong = Content.Load<Song>("SFX/stage_2");
 
             SoundEffect keyPressEffect = Content.Load<SoundEffect>("SFX/add");
             SoundEffect removeEffect = Content.Load<SoundEffect>("SFX/delete");
             TextBox = new Box(new Rectangle(260, 210, 860, 300),
-                86,
+                75,
                 "",
                 GraphicsDevice,
                 EquationFont,
@@ -106,16 +116,17 @@ namespace LD48.Framework.Levels
                 if (p_InputController.IsButtonPress(InputConfiguration.Submit)) {
                     try {
                         if (IsEquationValid()) {
-                            DialogueBox.AddText(new DialogueEntry {
-                                Text = "Congratulations!",
-                                Sprite = GameInterface.Beatrice,
-                                Callback = () => IsLevelOver = true
-                            });
+                            FinishLevel();
                         }
                     } catch (PuzzleUnsolvedException e) {
-                        DialogueBox.AddText(new DialogueEntry { Text = e.Message });
+                        DialogueBox.AddText(new DialogueEntry {
+                            Text = e.Message,
+                            Speaker = GameInterface.Claire
+                        });
                     }
                 }
+            } else {
+                TextBox.Active = false;
             }
 
             DialogueBox.Update(p_GameTime, p_InputController);
@@ -126,7 +137,7 @@ namespace LD48.Framework.Levels
         {
             p_SpriteBatch.Draw(Rectangle, new Rectangle(0, 0, 1920, 1080), Color.LightGreen);
             p_SpriteBatch.Draw(Background, new Rectangle(0, 0, 1920, 1080), Color.White);
-            
+
             TextBox.Draw(p_SpriteBatch);
         }
 
@@ -188,13 +199,24 @@ namespace LD48.Framework.Levels
                     new Vector2(870, 950),
                     Color.Black,
                     0f,
-                    p_SpriteFont.MeasureString(LevelWarning)/2,
+                    p_SpriteFont.MeasureString(LevelWarning) / 2,
                     0.75f,
                     SpriteEffects.None,
                     1f);
             }
+
             DrawClaire(p_GameTime, p_SpriteBatch);
             DialogueBox.Draw(p_GameTime, p_SpriteBatch);
+        }
+
+        protected virtual void FinishLevel()
+        {
+            StopSong();
+            DialogueBox.AddText(new DialogueEntry {
+                Text = "Congratulations!",
+                Speaker = GameInterface.Claire,
+                Callback = () => IsLevelOver = true
+            });
         }
 
         protected string GetCurrentResult()
@@ -230,9 +252,9 @@ namespace LD48.Framework.Levels
             }
 
             bool respectsBank = true;
-            List<char> bankCopy = new List<char>();
+            List<char> bankCopy = new ();
             bankCopy.AddRange(NumberBank);
-            foreach (char character in TextBox.Text.Characters) {
+            foreach (char character in TextBox.Text.String) {
                 if (char.IsDigit(character)) {
                     if (bankCopy.Contains(character)) {
                         bankCopy.Remove(character);
@@ -262,7 +284,6 @@ namespace LD48.Framework.Levels
                     1f,
                     SpriteEffects.None,
                     1f);
-                
             } else {
                 p_SpriteBatch.Draw(ClaireDefault,
                     new Vector2(1645, 750),
@@ -276,13 +297,37 @@ namespace LD48.Framework.Levels
             }
         }
 
+        protected void PlaySong(bool p_IsBoss)
+        {
+            MediaPlayer.Play(p_IsBoss ? m_BossSong : m_LevelSong);
+
+            MediaPlayer.IsRepeating = true;
+        }
+
+        protected void StopSong()
+        {
+            MediaPlayer.Stop();
+        }
+
         private void RenderBank(SpriteBatch p_SpriteBatch,
                                 SpriteFont p_SpriteFont)
         {
+            List<char> equationCopy = new List<char>();
+            equationCopy.AddRange(TextBox.Text.String.ToArray());
+
             for (int i = 0; i < NumberBank.Count; i++) {
+                bool used = false;
+                if (equationCopy.Contains(NumberBank[i])) {
+                    equationCopy.Remove(NumberBank[i]);
+                    used = true;
+                }
+
                 int column = i % 10;
                 int row = (i - column) / 3;
-                p_SpriteBatch.DrawString(p_SpriteFont, NumberBank[i].ToString(), new Vector2(200 + 100 * column, 550 + 50 * row), Color.Black);
+                p_SpriteBatch.DrawString(p_SpriteFont,
+                    NumberBank[i].ToString(),
+                    new Vector2(200 + 100 * column, 550 + 50 * row),
+                    used ? Color.White : Color.Black);
             }
         }
     }
