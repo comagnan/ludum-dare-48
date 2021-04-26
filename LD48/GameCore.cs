@@ -1,4 +1,5 @@
-﻿using LD48.Framework.Input;
+﻿using System.Runtime.InteropServices;
+using LD48.Framework.Input;
 using LD48.Framework.Levels;
 using LD48.Framework.TextBox;
 using LD48.UserInterface;
@@ -44,7 +45,9 @@ namespace LD48
             m_InternalResolution = new RenderTarget2D(GraphicsDevice, 1920, 1080);
             m_Graphics.PreferredBackBufferWidth = 1920;
             m_Graphics.PreferredBackBufferHeight = 1080;
-            m_Graphics.IsFullScreen = true;
+            if (!RuntimeInformation.IsOSPlatform(OSPlatform.OSX)) {
+                m_Graphics.IsFullScreen = true;
+            }
             m_Graphics.ApplyChanges();
 
             m_TitleScreen = new TitleScreen(m_InternalResolution, Content);
