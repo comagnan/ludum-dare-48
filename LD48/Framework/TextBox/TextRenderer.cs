@@ -67,41 +67,6 @@ namespace LD48.Framework.TextBox
             }
         }
 
-        public int CharAt(Point localLocation)
-        {
-            Rectangle charRectangle = new Rectangle(0, 0, 0, Font.LineSpacing);
-
-            int r = localLocation.Y / Font.LineSpacing;
-
-            for (short i = 0; i < box.Text.Length; i++)
-            {
-                if (row[i] != r)
-                {
-                    continue;
-                }
-
-                // Rectangle that encompasses the current character.
-                charRectangle.X = X[i];
-                charRectangle.Y = Y[i];
-                charRectangle.Width = Width[i];
-
-                // Click on a character so put the cursor in front of it.
-                if (charRectangle.Contains(localLocation))
-                {
-                    return i;
-                }
-
-                // Next character is not on the correct row so this is the last character for this row so select it.
-                if (i < box.Text.Length - 1 && row[i + 1] != r)
-                {
-                    return i;
-                }
-            }
-
-            // Missed a character so return the end.
-            return box.Text.Length;
-        }
-
         private void MeasureCharacterWidths()
         {
             for (int i = 0; i < box.Text.Length; i++)
@@ -184,14 +149,14 @@ namespace LD48.Framework.TextBox
                         // Render line and return start of new line.
                         tempText = t.Substring(start, iCount - start);
                         spriteBatch.DrawString(Font, tempText, new Vector2(0.0f, height), Color);
-                        return iCount + 1;
+                        return iCount;
                     }
 
                     // Have a character we can split on.
                     // Render line and return start of new line.
                     tempText = t.Substring(start, breakLocation - start);
                     spriteBatch.DrawString(Font, tempText, new Vector2(0.0f, height), Color);
-                    return breakLocation + 1;
+                    return breakLocation;
                 }
 
                 // Handle characters that force/allow for breaks.

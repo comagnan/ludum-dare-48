@@ -14,7 +14,7 @@ namespace LD48.Framework.Levels
         /// <summary>
         /// Constructs a new level.
         /// </summary>
-        public LevelSeven(ContentManager p_Content) : base(p_Content, 7, "Lady Luck")
+        public LevelSeven(ContentManager p_Content) : base(p_Content, 7, "Lady Luck?")
         {
             NumberBank = new List<char> {
                 '1',

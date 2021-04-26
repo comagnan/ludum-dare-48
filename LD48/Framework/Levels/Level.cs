@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Globalization;
@@ -75,7 +75,7 @@ namespace LD48.Framework.Levels
         }
 
         // Must be called after initializing inheritors.
-        public virtual void Initialize(GameWindow p_Window,
+        public void Initialize(GameWindow p_Window,
                                        GraphicsDevice p_GraphicsDevice)
         {
             GraphicsDevice = p_GraphicsDevice;
